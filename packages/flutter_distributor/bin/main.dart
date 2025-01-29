@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:args/args.dart';
 import 'package:args/command_runner.dart';
 import 'package:flutter_distributor/flutter_distributor.dart';
@@ -47,5 +49,9 @@ Future<void> main(List<String> args) async {
     }
   }
 
-  return runner.runCommand(argResults);
+  dynamic result = await runner.runCommand(argResults);
+  if (result != null) {
+    exit(-1);
+  }
+  return result;
 }
