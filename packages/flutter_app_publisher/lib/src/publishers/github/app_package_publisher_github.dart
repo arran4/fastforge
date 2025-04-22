@@ -28,7 +28,9 @@ class AppPackagePublisherGithub extends AppPackagePublisher {
     Map<String, dynamic>? publishArguments,
     PublishProgressCallback? onPublishProgress,
   }) async {
-    File file = fileSystemEntity as File;
+    if (fileSystemEntity is! File) {
+      throw PublishError('FileSystemEntity:${fileSystemEntity.path} is not a file');
+    }
     PublishGithubConfig publishConfig = PublishGithubConfig.parse(
       environment,
       publishArguments,
@@ -55,7 +57,7 @@ class AppPackagePublisherGithub extends AppPackagePublisher {
     }
     // Upload file
     String browserDownloadUrl =
-        await _uploadReleaseAsset(file, uploadUrl!, onPublishProgress);
+        await _uploadReleaseAsset(fileSystemEntity, uploadUrl!, onPublishProgress);
     return PublishResult(
       url: browserDownloadUrl,
     );
