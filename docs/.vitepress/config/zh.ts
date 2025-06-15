@@ -90,6 +90,7 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
         { text: 'msix', link: 'makers/msix' },
         { text: 'pkg', link: 'makers/pkg' },
         { text: 'rpm', link: 'makers/rpm' },
+        { text: 'flatpak', link: 'makers/flatpak' },
         { text: 'zip', link: 'makers/zip' },
       ],
     },

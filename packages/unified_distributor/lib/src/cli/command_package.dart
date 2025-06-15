@@ -34,6 +34,7 @@ class CommandPackage extends Command {
         'app',
         'appimage',
         'deb',
+        'flatpak',
         'dmg',
         'exe',
         'hap',
