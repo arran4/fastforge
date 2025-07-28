@@ -15,6 +15,7 @@ npm install -g appdmg
 ## Usage
 
 Add `make_config.yaml` to your project `macos/packaging/dmg` directory.
+You can also create a `macos/packaging/make_config.yaml` with shared defaults.
 
 ```yaml
 title: hello_world

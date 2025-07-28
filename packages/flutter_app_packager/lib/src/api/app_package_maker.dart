@@ -10,9 +10,36 @@ export 'make_config.dart';
 export 'make_error.dart';
 export 'make_result.dart';
 
-Map<String, dynamic> loadMakeConfigYaml(String path) {
+Map<String, dynamic> _mergeYamlMap(
+  Map<String, dynamic> parent,
+  Map<String, dynamic> child,
+) {
+  final result = Map<String, dynamic>.from(parent);
+  child.forEach((key, value) {
+    if (value is Map && result[key] is Map) {
+      result[key] = _mergeYamlMap(
+        Map<String, dynamic>.from(result[key] as Map),
+        Map<String, dynamic>.from(value as Map),
+      );
+    } else {
+      result[key] = value;
+    }
+  });
+  return result;
+}
+
+Map<String, dynamic> loadMakeConfigYaml(
+  String path, {
+  String? parentPath,
+}) {
+  Map<String, dynamic> map = {};
+  if (parentPath != null && File(parentPath).existsSync()) {
+    final parentDoc = loadYaml(File(parentPath).readAsStringSync());
+    map = json.decode(json.encode(parentDoc));
+  }
   final yamlDoc = loadYaml(File(path).readAsStringSync());
-  return json.decode(json.encode(yamlDoc));
+  final childMap = json.decode(json.encode(yamlDoc));
+  return _mergeYamlMap(map, childMap);
 }
 
 abstract class AppPackageMaker {

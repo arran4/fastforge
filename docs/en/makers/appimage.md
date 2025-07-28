@@ -25,6 +25,7 @@ mv appimagetool /usr/local/bin/
 ## Usage
 
 Add `make_config.yaml` to your project `linux/packaging/appimage` directory.
+If a `linux/packaging/make_config.yaml` file exists, its values will be merged as defaults.
 
 ```yaml
 display_name: Hello World

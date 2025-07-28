@@ -25,6 +25,7 @@ mv appimagetool /usr/local/bin/
 ## 用法
 
 将 `make_config.yaml` 添加到您的项目 `linux/packaging/appimage` 目录。
+如果存在 `linux/packaging/make_config.yaml`，其配置会作为默认值被合并。
 
 ```yaml
 display_name: Hello World

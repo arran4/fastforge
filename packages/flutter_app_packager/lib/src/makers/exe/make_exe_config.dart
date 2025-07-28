@@ -113,6 +113,7 @@ class MakeExeConfigLoader extends DefaultMakeConfigLoader {
     );
     final map = loadMakeConfigYaml(
       '$platform/packaging/$packageFormat/make_config.yaml',
+      parentPath: '$platform/packaging/make_config.yaml',
     );
     return MakeExeConfig.fromJson(map).copyWith(baseMakeConfig)
       ..isInstaller = true;

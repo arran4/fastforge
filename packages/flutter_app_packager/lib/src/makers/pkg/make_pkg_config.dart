@@ -42,6 +42,7 @@ class MakePkgConfigLoader extends DefaultMakeConfigLoader {
     );
     final map = loadMakeConfigYaml(
       '$platform/packaging/$packageFormat/make_config.yaml',
+      parentPath: '$platform/packaging/make_config.yaml',
     );
     return MakePkgConfig.fromJson(map).copyWith(baseMakeConfig);
   }

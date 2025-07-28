@@ -41,5 +41,23 @@ void main() {
         'dist/1.0.0+1/test_app-1.0.0+1-android.apk',
       );
     });
+
+    test('loadMakeConfigYaml merges parent', () {
+      final tempDir = Directory.systemTemp.createTempSync();
+      final parentFile = File('${tempDir.path}/parent.yaml')
+        ..writeAsStringSync(
+            'maintainer:\n  name: Foo\n  email: foo@ex.com\npackage_name: parent');
+      final childFile = File('${tempDir.path}/child.yaml')
+        ..writeAsStringSync('maintainer:\n  email: bar@ex.com');
+
+      final map = loadMakeConfigYaml(
+        childFile.path,
+        parentPath: parentFile.path,
+      );
+
+      expect(map['package_name'], 'parent');
+      expect((map['maintainer'] as Map)['name'], 'Foo');
+      expect((map['maintainer'] as Map)['email'], 'bar@ex.com');
+    });
   });
 }

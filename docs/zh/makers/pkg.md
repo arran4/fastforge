@@ -5,6 +5,7 @@
 ## 用法
 
 将 `make_config.yaml` 添加到你的项目 `macos/packaging/pkg` 目录。
+也可以在 `macos/packaging/make_config.yaml` 中提供默认值。
 
 ```yaml
 install-path: /Applications

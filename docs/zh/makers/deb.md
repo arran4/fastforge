@@ -1,6 +1,7 @@
 # deb
 
 将 `make_config.yaml` 添加到您的项目 `linux/packaging/deb` 目录。
+如果存在 `linux/packaging/make_config.yaml`，其值会与当前文件合并作为默认设置。
 
 ```yaml
 display_name: Hello World

@@ -7,6 +7,7 @@
 ## 用法
 
 将 `make_config.yaml` 添加到你的项目 `windows/packaging/exe` 目录。
+可以在 `windows/packaging/make_config.yaml` 中定义所有 Windows 包的默认值。
 
 ```yaml
 # AppId 的值唯一标识此应用。

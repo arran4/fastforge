@@ -1,6 +1,8 @@
 # deb
 
 Add `make_config.yaml` to your project `linux/packaging/deb` directory.
+If a `linux/packaging/make_config.yaml` file exists, its values will be used as
+defaults and merged with the package specific file.
 
 ```yaml
 display_name: Hello World

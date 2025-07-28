@@ -14,6 +14,7 @@
 ## 用法
 
 将 `make_config.yaml` 添加到您的项目 `linux/packaging/rpm` 目录。
+`linux/packaging/make_config.yaml` 文件中的配置会作为所有 Linux 包的默认值。
 
 ```yaml
 icon: assets/logo.png

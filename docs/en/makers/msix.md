@@ -3,6 +3,7 @@
 ## Usage
 
 Add `make_config.yaml` to your project `windows/packaging/msix` directory.
+Common settings can be placed in `windows/packaging/make_config.yaml`.
 
 ```yaml
 display_name: HelloWorld

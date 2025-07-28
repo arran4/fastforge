@@ -5,6 +5,7 @@
 ## Usage
 
 Add `make_config.yaml` to your project `macos/packaging/pkg` directory.
+Defaults may also come from `macos/packaging/make_config.yaml`.
 
 ```yaml
 install-path: /Applications

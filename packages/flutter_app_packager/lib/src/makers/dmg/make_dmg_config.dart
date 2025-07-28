@@ -207,6 +207,7 @@ class MakeDmgConfigLoader extends DefaultMakeConfigLoader {
     );
     final map = loadMakeConfigYaml(
       '$platform/packaging/$packageFormat/make_config.yaml',
+      parentPath: '$platform/packaging/make_config.yaml',
     );
     return MakeDmgConfig.fromJson(map).copyWith(baseMakeConfig);
   }
