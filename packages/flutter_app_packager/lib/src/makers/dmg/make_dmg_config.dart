@@ -128,9 +128,8 @@ class MakeDmgConfig extends MakeConfig {
       codeSign: json['code-sign'] != null
           ? DmgCodeSign.fromJson(json['code-sign'])
           : null,
-      window: json['window'] != null
-          ? DmgWindow.fromJson(json['window'])
-          : null,
+      window:
+          json['window'] != null ? DmgWindow.fromJson(json['window']) : null,
     );
   }
   final String title;

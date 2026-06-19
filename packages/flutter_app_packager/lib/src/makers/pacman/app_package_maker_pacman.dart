@@ -162,10 +162,13 @@ class AppPackageMakerPacman extends AppPackageMaker {
       throw MakeError(archiveResult.stderr);
     }
 
-    ProcessResult processResult = await $('xz', [
-      '-z',
-      'temptar',
-    ], workingDirectory: packagingDirectory.path);
+    ProcessResult processResult = await $(
+        'xz',
+        [
+          '-z',
+          'temptar',
+        ],
+        workingDirectory: packagingDirectory.path);
 
     if (processResult.exitCode != 0) {
       throw MakeError(processResult.stderr);

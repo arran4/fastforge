@@ -37,7 +37,8 @@ class AppPackageMakerFlatpak extends AppPackageMaker {
     required MakeFlatpakConfig makeConfig,
   }) async {
     final packagingDirectory = makeConfig.packagingDirectory;
-    final appDir = Directory(path.join(packagingDirectory.path, 'app'));
+    final appDir = Directory(path.join(packagingDirectory.path, 'app'))
+      ..createSync(recursive: true);
     await $('cp', ['-fr', '${appDirectory.path}/.', appDir.path]);
 
     final manifestFile = File(
@@ -55,7 +56,7 @@ class AppPackageMakerFlatpak extends AppPackageMaker {
       buildDir.path,
       manifestFile.path,
     ]);
-    if (result.exitCode != 0) throw MakeError();
+    if (result.exitCode != 0) throw MakeError(result.stderr as String);
 
     result = await $('flatpak', [
       'build-bundle',
@@ -64,7 +65,7 @@ class AppPackageMakerFlatpak extends AppPackageMaker {
       makeConfig.appId,
       'master',
     ]);
-    if (result.exitCode != 0) throw MakeError();
+    if (result.exitCode != 0) throw MakeError(result.stderr as String);
 
     packagingDirectory.deleteSync(recursive: true);
     return MakeResult(makeConfig);

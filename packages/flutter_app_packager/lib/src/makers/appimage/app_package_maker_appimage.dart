@@ -23,34 +23,30 @@ class AppPackageMakerAppImage extends AppPackageMaker {
   }
 
   Future<Set<String>> _getSharedDependencies(String so) {
-    return $('ldd', ['-d', so])
-        .then((value) {
-          if (value.exitCode != 0) {
-            throw MakeError(value.stderr as String);
-          }
-          return value.stdout as String;
-        })
-        .then((lines) {
-          final soDeps =
-              lines
-                  .split('\n')
-                  .where(
-                    (line) =>
-                        line.contains('=>') && line.trim().startsWith('lib'),
-                  )
-                  /// converts this:
-                  ///  libkeybinder-3.0.so.0 => /lib64/libkeybinder-3.0.so.0 (0x00007f6513811000)
-                  /// to this:
-                  ///  /lib64/libkeybinder-3.0.so.0
-                  .map(
-                    (line) =>
-                        line.split(' => ')[1].trim().split(' ').first.trim(),
-                  )
-                  .toList()
-                ..sort();
+    return $('ldd', ['-d', so]).then((value) {
+      if (value.exitCode != 0) {
+        throw MakeError(value.stderr as String);
+      }
+      return value.stdout as String;
+    }).then((lines) {
+      final soDeps = lines
+          .split('\n')
+          .where(
+            (line) => line.contains('=>') && line.trim().startsWith('lib'),
+          )
 
-          return soDeps.toSet();
-        });
+          /// converts this:
+          ///  libkeybinder-3.0.so.0 => /lib64/libkeybinder-3.0.so.0 (0x00007f6513811000)
+          /// to this:
+          ///  /lib64/libkeybinder-3.0.so.0
+          .map(
+            (line) => line.split(' => ')[1].trim().split(' ').first.trim(),
+          )
+          .toList()
+        ..sort();
+
+      return soDeps.toSet();
+    });
   }
 
   @override
@@ -181,13 +177,12 @@ class AppPackageMakerAppImage extends AppPackageMaker {
         'libgtk-3.so.0',
       ];
 
-      final appSOLibs =
-          Directory(
-            path.join(
-              makeConfig.packagingDirectory.path,
-              '${makeConfig.appName}.AppDir/lib',
-            ),
-          ).listSync().where(
+      final appSOLibs = Directory(
+        path.join(
+          makeConfig.packagingDirectory.path,
+          '${makeConfig.appName}.AppDir/lib',
+        ),
+      ).listSync().where(
             (e) => !defaultSharedObjects.contains(path.basename(e.path)),
           );
 
@@ -212,13 +207,13 @@ class AppPackageMakerAppImage extends AppPackageMaker {
 
       await Future.wait(
         appSOLibs.map((so) async {
-          final referencedSharedLibs = await _getSharedDependencies(so.path)
-              .then(
-                (d) => d.difference(libFlutterGtkDeps)
-                  ..removeWhere(
-                    (lib) => lib.contains('libflutter_linux_gtk.so'),
-                  ),
-              );
+          final referencedSharedLibs =
+              await _getSharedDependencies(so.path).then(
+            (d) => d.difference(libFlutterGtkDeps)
+              ..removeWhere(
+                (lib) => lib.contains('libflutter_linux_gtk.so'),
+              ),
+          );
 
           if (referencedSharedLibs.isEmpty) return;
 
@@ -238,23 +233,21 @@ class AppPackageMakerAppImage extends AppPackageMaker {
 
       await Future.wait(
         makeConfig.include.map((so) async {
-          final file = await $('locate', [so])
-              .then((value) {
-                if (value.exitCode != 0) {
-                  throw MakeError(value.stderr as String);
-                }
-                return value.stdout as String;
-              })
-              .then((out) {
-                final paths = out
-                    .split('\n')
-                    .where((p) => p.isNotEmpty && !p.contains('/Trash'))
-                    .toList();
-                if (paths.isEmpty) {
-                  throw MakeError("Can't find specified shared object $so");
-                }
-                return File(paths.first.trim());
-              });
+          final file = await $('locate', [so]).then((value) {
+            if (value.exitCode != 0) {
+              throw MakeError(value.stderr as String);
+            }
+            return value.stdout as String;
+          }).then((out) {
+            final paths = out
+                .split('\n')
+                .where((p) => p.isNotEmpty && !p.contains('/Trash'))
+                .toList();
+            if (paths.isEmpty) {
+              throw MakeError("Can't find specified shared object $so");
+            }
+            return File(paths.first.trim());
+          });
 
           await file.copy(
             path.join(

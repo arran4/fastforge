@@ -10,11 +10,15 @@ class MakeFlatpakConfig extends MakeLinuxPackageConfig {
     this.sdk = 'org.freedesktop.Sdk',
     List<String>? finishArgs,
   }) : finishArgs =
-           finishArgs ?? const ['--share=network', '--filesystem=home'];
+            finishArgs ?? const ['--share=network', '--filesystem=home'];
 
   factory MakeFlatpakConfig.fromJson(Map<String, dynamic> map) {
+    final appId = map['app_id'] as String?;
+    if (appId == null || appId.isEmpty) {
+      throw MakeError('app_id is required in flatpak make_config.yaml');
+    }
     return MakeFlatpakConfig(
-      appId: map['app_id'] as String,
+      appId: appId,
       runtime: map['runtime'] as String? ?? 'org.freedesktop.Platform',
       runtimeVersion: map['runtime_version'] as String? ?? '23.08',
       sdk: map['sdk'] as String? ?? 'org.freedesktop.Sdk',
@@ -35,7 +39,7 @@ app-id: $appId
 runtime: $runtime
 runtime-version: $runtimeVersion
 sdk: $sdk
-command: $binaryName
+command: /app/$binaryName
 finish-args:
 $finish
 modules:
@@ -47,6 +51,21 @@ modules:
       - type: dir
         path: app
 ''';
+  }
+
+  @override
+  MakeFlatpakConfig copyWith(MakeConfig makeConfig) {
+    return MakeFlatpakConfig(
+      appId: appId,
+      runtime: runtime,
+      runtimeVersion: runtimeVersion,
+      sdk: sdk,
+      finishArgs: finishArgs,
+    )
+      ..appName = makeConfig.appName
+      ..appVersion = makeConfig.appVersion
+      ..appBuildNumber = makeConfig.appBuildNumber
+      ..outputDirectory = makeConfig.outputDirectory;
   }
 }
 

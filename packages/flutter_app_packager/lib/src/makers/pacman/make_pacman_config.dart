@@ -120,9 +120,9 @@ class MakePacmanConfig extends MakeLinuxPackageConfig {
     this.conflicts,
     this.replaces,
     this.supportedMimeType,
-  }) : _postinstallScripts = postinstallScripts ?? [],
-       _postupgradeScripts = postupgradeScripts ?? [],
-       _postremoveScripts = postuninstallScripts ?? [];
+  })  : _postinstallScripts = postinstallScripts ?? [],
+        _postupgradeScripts = postupgradeScripts ?? [],
+        _postremoveScripts = postuninstallScripts ?? [];
 
   factory MakePacmanConfig.fromJson(Map<String, dynamic> map) {
     return MakePacmanConfig(
@@ -210,15 +210,15 @@ class MakePacmanConfig extends MakeLinuxPackageConfig {
   List<String>? categories;
 
   List<String> get postinstallScripts => [
-    'ln -s /usr/share/$appBinaryName/$appBinaryName /usr/bin/$appBinaryName',
-    'chmod +x /usr/bin/$appBinaryName',
-    ..._postinstallScripts,
-  ];
+        'ln -s /usr/share/$appBinaryName/$appBinaryName /usr/bin/$appBinaryName',
+        'chmod +x /usr/bin/$appBinaryName',
+        ..._postinstallScripts,
+      ];
 
   List<String> get postuninstallScripts => [
-    'rm /usr/bin/$appBinaryName',
-    ..._postremoveScripts,
-  ];
+        'rm /usr/bin/$appBinaryName',
+        ..._postremoveScripts,
+      ];
 
   List<String> get postupgradeScripts => _postupgradeScripts;
 
@@ -236,12 +236,10 @@ class MakePacmanConfig extends MakeLinuxPackageConfig {
         'arch': '(${_getArchitecture()})',
         'url': pubspec.homepage,
         'options': options != null ? "(${options!.join(', ')})" : null,
-        'depends': dependencies != null
-            ? "(${dependencies!.join(', ')})"
-            : null,
-        'optdepends': optDependencies != null
-            ? "(${optDependencies!.join(', ')})"
-            : null,
+        'depends':
+            dependencies != null ? "(${dependencies!.join(', ')})" : null,
+        'optdepends':
+            optDependencies != null ? "(${optDependencies!.join(', ')})" : null,
         'conflicts': conflicts != null ? "(${conflicts!.join(', ')})" : null,
         'replaces': replaces != null ? "(${replaces!.join(', ')})" : null,
         'provides': provides != null ? "(${provides!.join(', ')})" : null,
@@ -276,9 +274,8 @@ class MakePacmanConfig extends MakeLinuxPackageConfig {
         '${(json['PKGINFO'] as Map<String, dynamic>).entries.map((e) => '${e.key}=${e.value}').join('\n')}\n';
     final installFileMap = {
       'post_install': postinstallScripts.join('\n\t'),
-      'post_upgrade': postupgradeScripts.isNotEmpty
-          ? postupgradeScripts.join('\n')
-          : null,
+      'post_upgrade':
+          postupgradeScripts.isNotEmpty ? postupgradeScripts.join('\n') : null,
       'post_remove': postuninstallScripts.join('\n'),
     }..removeWhere((key, value) => value == null);
 
@@ -289,8 +286,8 @@ class MakePacmanConfig extends MakeLinuxPackageConfig {
     final desktopFile = [
       '[Desktop Entry]',
       ...(json['DESKTOP'] as Map<String, dynamic>).entries.map(
-        (e) => '${e.key}=${e.value}',
-      ),
+            (e) => '${e.key}=${e.value}',
+          ),
     ].join('\n');
     final map = {
       'PKGINFO': pkginfoFile,

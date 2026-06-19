@@ -45,8 +45,8 @@ class MakeRPMConfig extends MakeConfig {
       genericName: json['generic_name'] as String?,
       startupNotify: json['startup_notify'] as bool?,
       keywords: (json['keywords'] as List<dynamic>?)?.cast<String>(),
-      supportedMimeType: (json['supported_mime_type'] as List<dynamic>?)
-          ?.cast<String>(),
+      supportedMimeType:
+          (json['supported_mime_type'] as List<dynamic>?)?.cast<String>(),
       actions: (json['actions'] as List<dynamic>?)?.cast<String>(),
       categories: (json['categories'] as List<dynamic>?)?.cast<String>(),
       summary: json['summary'] as String?,
@@ -115,9 +115,8 @@ class MakeRPMConfig extends MakeConfig {
           'Summary': summary ?? pubspec.description,
           'Group': group,
           'Vendor': vendor,
-          'Packager': packagerEmail != null
-              ? '$packager <$packagerEmail>'
-              : packager,
+          'Packager':
+              packagerEmail != null ? '$packager <$packagerEmail>' : packager,
           'License': license,
           'URL': url,
           'Requires': requires?.join(', '),
@@ -181,25 +180,22 @@ class MakeRPMConfig extends MakeConfig {
   Map<String, String> toFilesString() {
     final json = toJson();
 
-    final preamble = (json['SPEC']['preamble'] as Map).entries
+    final preamble = (json['SPEC']['preamble'] as Map)
+        .entries
         .map((e) => '${e.key}: ${e.value}')
         .join('\n');
-    final body = (json['SPEC']['body'] as Map).entries
-        .map((e) {
-          return '${e.key}\n${e.value}\n';
-        })
-        .join('\n');
-    final inlineBody = (json['SPEC']['inline-body'] as Map).entries
-        .map((e) {
-          return '${e.key}${e.value}\n';
-        })
-        .join('\n');
+    final body = (json['SPEC']['body'] as Map).entries.map((e) {
+      return '${e.key}\n${e.value}\n';
+    }).join('\n');
+    final inlineBody = (json['SPEC']['inline-body'] as Map).entries.map((e) {
+      return '${e.key}${e.value}\n';
+    }).join('\n');
 
     final desktopFile = [
       '[Desktop Entry]',
       ...(json['DESKTOP'] as Map<String, dynamic>).entries.map(
-        (e) => '${e.key}=${e.value}',
-      ),
+            (e) => '${e.key}=${e.value}',
+          ),
     ].join('\n');
     final map = {
       'DESKTOP': desktopFile,
