@@ -29,9 +29,6 @@ class AppBuilderIos extends AppBuilder {
         'Missing `export-options-plist` or `export-method` build argument.',
       );
     }
-    return super.build(
-      arguments: arguments,
-      environment: environment,
-    );
+    return super.build(arguments: arguments, environment: environment);
   }
 }

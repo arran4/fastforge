@@ -25,7 +25,9 @@ void main() {
         expect(config.buildPassword, equals('test_password'));
         expect(config.buildDescription, equals('Test app description'));
         expect(
-            config.buildUpdateDescription, equals('Test update description'));
+          config.buildUpdateDescription,
+          equals('Test update description'),
+        );
         expect(config.buildInstallDate, equals(1));
         expect(config.buildInstallStartDate, equals('2024-01-01'));
         expect(config.buildInstallEndDate, equals('2024-12-31'));
@@ -33,9 +35,7 @@ void main() {
       });
 
       test('creates instance with only required parameters', () {
-        final config = PublishPgyerConfig(
-          apiKey: 'test_api_key',
-        );
+        final config = PublishPgyerConfig(apiKey: 'test_api_key');
 
         expect(config.apiKey, equals('test_api_key'));
         expect(config.oversea, isNull);
@@ -88,7 +88,9 @@ void main() {
         expect(config.buildPassword, equals('test_password'));
         expect(config.buildDescription, equals('Test app description'));
         expect(
-            config.buildUpdateDescription, equals('Test update description'));
+          config.buildUpdateDescription,
+          equals('Test update description'),
+        );
         expect(config.buildInstallDate, equals(1));
         expect(config.buildInstallStartDate, equals('2024-01-01'));
         expect(config.buildInstallEndDate, equals('2024-12-31'));
@@ -150,7 +152,8 @@ void main() {
         final config = PublishPgyerConfig.parse(environment, publishArguments);
 
         print(
-            '   Result: oversea=${config.oversea}, install-type=${config.buildInstallType}, install-date=${config.buildInstallDate}');
+          '   Result: oversea=${config.oversea}, install-type=${config.buildInstallType}, install-date=${config.buildInstallDate}',
+        );
 
         expect(config.oversea, equals(1));
         expect(config.buildInstallType, equals(2));

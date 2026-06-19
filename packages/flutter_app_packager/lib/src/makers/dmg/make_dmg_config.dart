@@ -3,57 +3,36 @@ import 'dart:io';
 import 'package:flutter_app_packager/src/api/app_package_maker.dart';
 
 class DmgWindowPosition {
-  DmgWindowPosition({
-    required this.x,
-    required this.y,
-  });
+  DmgWindowPosition({required this.x, required this.y});
 
   factory DmgWindowPosition.fromJson(Map<String, dynamic> json) {
-    return DmgWindowPosition(
-      x: json['x'],
-      y: json['y'],
-    );
+    return DmgWindowPosition(x: json['x'], y: json['y']);
   }
 
   final num x;
   final num y;
 
   Map<String, dynamic> toJson() {
-    return {
-      'x': x,
-      'y': y,
-    };
+    return {'x': x, 'y': y};
   }
 }
 
 class DmgWindowSize {
-  DmgWindowSize({
-    required this.width,
-    required this.height,
-  });
+  DmgWindowSize({required this.width, required this.height});
 
   factory DmgWindowSize.fromJson(Map<String, dynamic> json) {
-    return DmgWindowSize(
-      width: json['width'],
-      height: json['height'],
-    );
+    return DmgWindowSize(width: json['width'], height: json['height']);
   }
   final num width;
   final num height;
 
   Map<String, dynamic> toJson() {
-    return {
-      'width': width,
-      'height': height,
-    };
+    return {'width': width, 'height': height};
   }
 }
 
 class DmgWindow {
-  DmgWindow({
-    this.position,
-    this.size,
-  });
+  DmgWindow({this.position, this.size});
 
   factory DmgWindow.fromJson(Map<String, dynamic> json) {
     return DmgWindow(
@@ -67,18 +46,13 @@ class DmgWindow {
   final DmgWindowSize? size;
 
   Map<String, dynamic> toJson() {
-    return {
-      'position': position?.toJson(),
-      'size': size?.toJson(),
-    }..removeWhere((key, value) => value == null);
+    return {'position': position?.toJson(), 'size': size?.toJson()}
+      ..removeWhere((key, value) => value == null);
   }
 }
 
 class DmgCodeSign {
-  DmgCodeSign({
-    required this.signingIdentity,
-    this.identifier,
-  });
+  DmgCodeSign({required this.signingIdentity, this.identifier});
 
   factory DmgCodeSign.fromJson(Map<String, dynamic> json) {
     return DmgCodeSign(
@@ -90,10 +64,8 @@ class DmgCodeSign {
   final String? identifier;
 
   Map<String, dynamic> toJson() {
-    return {
-      'signing-identity': signingIdentity,
-      'identifier': identifier,
-    }..removeWhere((key, value) => value == null);
+    return {'signing-identity': signingIdentity, 'identifier': identifier}
+      ..removeWhere((key, value) => value == null);
   }
 }
 
@@ -122,13 +94,8 @@ class DmgContent {
   final String? name;
 
   Map<String, dynamic> toJson() {
-    return {
-      'x': x,
-      'y': y,
-      'type': type,
-      'path': path,
-      'name': name,
-    }..removeWhere((key, value) => value == null);
+    return {'x': x, 'y': y, 'type': type, 'path': path, 'name': name}
+      ..removeWhere((key, value) => value == null);
   }
 }
 
@@ -161,8 +128,9 @@ class MakeDmgConfig extends MakeConfig {
       codeSign: json['code-sign'] != null
           ? DmgCodeSign.fromJson(json['code-sign'])
           : null,
-      window:
-          json['window'] != null ? DmgWindow.fromJson(json['window']) : null,
+      window: json['window'] != null
+          ? DmgWindow.fromJson(json['window'])
+          : null,
     );
   }
   final String title;

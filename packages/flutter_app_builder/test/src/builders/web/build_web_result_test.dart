@@ -5,17 +5,11 @@ import 'package:test/test.dart';
 void main() {
   group('web result', () {
     test('profile mode', () {
-      final r = BuildWebResult(
-        BuildConfig(
-          arguments: {'profile': true},
-        ),
-      );
+      final r = BuildWebResult(BuildConfig(arguments: {'profile': true}));
       expect(r.outputDirectory.path, 'build/web');
     });
     test('release mode', () {
-      final r = BuildWebResult(
-        BuildConfig(),
-      );
+      final r = BuildWebResult(BuildConfig());
       expect(r.outputDirectory.path, 'build/web');
     });
   });

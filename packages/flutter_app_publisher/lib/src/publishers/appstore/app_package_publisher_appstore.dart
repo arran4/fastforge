@@ -23,27 +23,24 @@ class AppPackagePublisherAppStore extends AppPackagePublisher {
     // Get type
     String type = file.path.endsWith('.ipa') ? 'ios' : 'osx';
     // Get config
-    PublishAppStoreConfig publishConfig =
-        PublishAppStoreConfig.parse(environment, publishArguments);
-    // Publish to AppStore
-    ProcessResult processResult = await $(
-      'xcrun',
-      [
-        'altool',
-        '--upload-app',
-        '--file',
-        file.path,
-        '--type',
-        type,
-        // cmd list
-        ...publishConfig.toAppStoreCliDistributeArgs(),
-      ],
+    PublishAppStoreConfig publishConfig = PublishAppStoreConfig.parse(
+      environment,
+      publishArguments,
     );
+    // Publish to AppStore
+    ProcessResult processResult = await $('xcrun', [
+      'altool',
+      '--upload-app',
+      '--file',
+      file.path,
+      '--type',
+      type,
+      // cmd list
+      ...publishConfig.toAppStoreCliDistributeArgs(),
+    ]);
 
     if (processResult.exitCode == 0) {
-      return PublishResult(
-        url: 'https://appstoreconnect.apple.com/apps',
-      );
+      return PublishResult(url: 'https://appstoreconnect.apple.com/apps');
     } else {
       throw PublishError(
         '${processResult.exitCode} - Upload of appstore failed',

@@ -30,12 +30,9 @@ class AppPackagePublisherPlayStore extends AppPackagePublisher {
     ServiceAccountCredentials serviceAccountCredentials =
         ServiceAccountCredentials.fromJson(json.decode(jsonString));
 
-    final client = await clientViaServiceAccount(
-      serviceAccountCredentials,
-      [
-        AndroidPublisherApi.androidpublisherScope,
-      ],
-    );
+    final client = await clientViaServiceAccount(serviceAccountCredentials, [
+      AndroidPublisherApi.androidpublisherScope,
+    ]);
 
     final AndroidPublisherApi publisherApi = AndroidPublisherApi(client);
 
@@ -72,13 +69,8 @@ class AppPackagePublisherPlayStore extends AppPackagePublisher {
       );
     }
 
-    await publisherApi.edits.commit(
-      publishConfig.packageName,
-      appEdit.id!,
-    );
+    await publisherApi.edits.commit(publishConfig.packageName, appEdit.id!);
 
-    return PublishResult(
-      url: '',
-    );
+    return PublishResult(url: '');
   }
 }

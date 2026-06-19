@@ -2,9 +2,7 @@ import 'package:shell_executor/src/utils/path_expansion.dart';
 import 'package:test/test.dart';
 
 void main() {
-  Map<String, String> environment = {
-    'HOME': '/home/root',
-  };
+  Map<String, String> environment = {'HOME': '/home/root'};
   group('pathExpansion', () {
     test('~/Documents', () {
       final path = pathExpansion('~/Documents', environment);

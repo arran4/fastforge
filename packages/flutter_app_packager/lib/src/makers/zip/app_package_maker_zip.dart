@@ -32,10 +32,11 @@ class AppPackageMakerZip extends AppPackageMaker {
           .map((e) => File(e.path))
           .first;
       await $('cp', ['-RH', appFile.path, packagingDirectory.path]);
-      await $(
-        '7z',
-        ['a', config.outputFile.path, './${packagingDirectory.path}/*.app'],
-      );
+      await $('7z', [
+        'a',
+        config.outputFile.path,
+        './${packagingDirectory.path}/*.app',
+      ]);
       packagingDirectory.deleteSync(recursive: true);
     } else {
       final zipFileEncoder = ZipFileEncoder();

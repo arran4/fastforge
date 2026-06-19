@@ -35,19 +35,16 @@ class AppPackagePublisherVercel extends AppPackagePublisher {
           'projectId': publishConfig.projectId,
         }),
       );
-      ProcessResult r = await $(
-        'vercel',
-        ['--prod'],
-        workingDirectory: directory.path,
-      );
+      ProcessResult r = await $('vercel', [
+        '--prod',
+      ], workingDirectory: directory.path);
 
       String log = r.stderr.toString();
-      RegExpMatch? match =
-          RegExp(r'(?<=Production: )\bhttps?:\/\/\S+\b').firstMatch(log);
+      RegExpMatch? match = RegExp(
+        r'(?<=Production: )\bhttps?:\/\/\S+\b',
+      ).firstMatch(log);
 
-      return PublishResult(
-        url: match != null ? match.group(0)! : '',
-      );
+      return PublishResult(url: match != null ? match.group(0)! : '');
     } catch (error) {
       rethrow;
     }

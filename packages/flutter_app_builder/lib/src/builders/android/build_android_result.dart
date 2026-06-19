@@ -7,11 +7,10 @@ import 'package:glob/list_local_fs.dart';
 import 'package:recase/recase.dart';
 
 class BuildAndroidResultResolver extends BuildResultResolver {
-  BuildAndroidResultResolver(
-    this.target,
-  ) : _actualResultResolver = target == 'aab'
-            ? _BuildAndroidAabResultResolver()
-            : _BuildAndroidApkResultResolver();
+  BuildAndroidResultResolver(this.target)
+    : _actualResultResolver = target == 'aab'
+          ? _BuildAndroidAabResultResolver()
+          : _BuildAndroidApkResultResolver();
 
   factory BuildAndroidResultResolver.apk() {
     return BuildAndroidResultResolver('apk');
@@ -33,20 +32,17 @@ class BuildAndroidResultResolver extends BuildResultResolver {
 
 class BuildAndroidResult extends BuildResult {
   BuildAndroidResult(this.target, BuildConfig config)
-      : _actualResult = target == 'aab'
-            ? _BuildAndroidAabResult(config)
-            : _BuildAndroidApkResult(config),
-        super(config);
+    : _actualResult = target == 'aab'
+          ? _BuildAndroidAabResult(config)
+          : _BuildAndroidApkResult(config),
+      super(config);
 
   factory BuildAndroidResult.apk(BuildConfig config) {
     return BuildAndroidResult('apk', config);
   }
 
   factory BuildAndroidResult.aab(BuildConfig config) {
-    return BuildAndroidResult(
-      'aab',
-      config,
-    );
+    return BuildAndroidResult('aab', config);
   }
   final String target;
 

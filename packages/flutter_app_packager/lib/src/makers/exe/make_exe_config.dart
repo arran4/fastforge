@@ -20,8 +20,9 @@ class MakeExeConfig extends MakeConfig {
   });
 
   factory MakeExeConfig.fromJson(Map<String, dynamic> json) {
-    List<String>? locales =
-        json['locales'] != null ? List<String>.from(json['locales']) : null;
+    List<String>? locales = json['locales'] != null
+        ? List<String>.from(json['locales'])
+        : null;
     if (locales == null || locales.isEmpty) locales = ['en'];
 
     // use absolute path

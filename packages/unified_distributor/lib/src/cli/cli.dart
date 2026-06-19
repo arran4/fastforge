@@ -75,8 +75,9 @@ class UnifiedDistributorCommandLineInterface {
       spinner.stop();
       if (result.isNewVersionAvailable) {
         String msg = [
-          '🚀 New version of $displayName available! '
-                  .brightYellow(bold: true) +
+          '🚀 New version of $displayName available! '.brightYellow(
+                bold: true,
+              ) +
               '${result.currentVersion}'.brightRed() +
               ' → '.brightYellow() +
               '${result.latestVersion}'.brightGreen(bold: true),

@@ -23,30 +23,34 @@ class AppPackageMakerAppImage extends AppPackageMaker {
   }
 
   Future<Set<String>> _getSharedDependencies(String so) {
-    return $('ldd', ['-d', so]).then((value) {
-      if (value.exitCode != 0) {
-        throw MakeError(value.stderr as String);
-      }
-      return value.stdout as String;
-    }).then(
-      (lines) {
-        final soDeps = lines
-            .split('\n')
-            .where(
-              (line) => line.contains('=>') && line.trim().startsWith('lib'),
-            )
+    return $('ldd', ['-d', so])
+        .then((value) {
+          if (value.exitCode != 0) {
+            throw MakeError(value.stderr as String);
+          }
+          return value.stdout as String;
+        })
+        .then((lines) {
+          final soDeps =
+              lines
+                  .split('\n')
+                  .where(
+                    (line) =>
+                        line.contains('=>') && line.trim().startsWith('lib'),
+                  )
+                  /// converts this:
+                  ///  libkeybinder-3.0.so.0 => /lib64/libkeybinder-3.0.so.0 (0x00007f6513811000)
+                  /// to this:
+                  ///  /lib64/libkeybinder-3.0.so.0
+                  .map(
+                    (line) =>
+                        line.split(' => ')[1].trim().split(' ').first.trim(),
+                  )
+                  .toList()
+                ..sort();
 
-            /// converts this:
-            ///  libkeybinder-3.0.so.0 => /lib64/libkeybinder-3.0.so.0 (0x00007f6513811000)
-            /// to this:
-            ///  /lib64/libkeybinder-3.0.so.0
-            .map((line) => line.split(' => ')[1].trim().split(' ').first.trim())
-            .toList()
-          ..sort();
-
-        return soDeps.toSet();
-      },
-    );
+          return soDeps.toSet();
+        });
   }
 
   @override
@@ -125,11 +129,7 @@ class AppPackageMakerAppImage extends AppPackageMaker {
         '${makeConfig.appName}.AppDir/usr/share/icons/hicolor/128x128/apps',
       );
 
-      await $('mkdir', [
-        '-p',
-        icon128x128,
-        icon256x256,
-      ]).then((value) {
+      await $('mkdir', ['-p', icon128x128, icon256x256]).then((value) {
         if (value.exitCode != 0) {
           throw MakeError(value.stderr as String);
         }
@@ -154,16 +154,15 @@ class AppPackageMakerAppImage extends AppPackageMaker {
           makeConfig.packagingDirectory.path,
           '${makeConfig.appName}.AppDir/usr/share/metainfo',
         );
-        await $('mkdir', [
-          '-p',
-          metainfoDir,
-        ]).then((value) {
+        await $('mkdir', ['-p', metainfoDir]).then((value) {
           if (value.exitCode != 0) {
             throw MakeError(value.stderr as String);
           }
         });
-        final metainfoPath =
-            path.join(Directory.current.path, makeConfig.metainfo!);
+        final metainfoPath = path.join(
+          Directory.current.path,
+          makeConfig.metainfo!,
+        );
         final metainfoFile = File(metainfoPath);
         if (!metainfoFile.existsSync()) {
           throw MakeError("Metainfo $metainfoPath path doesn't exist");
@@ -182,14 +181,15 @@ class AppPackageMakerAppImage extends AppPackageMaker {
         'libgtk-3.so.0',
       ];
 
-      final appSOLibs = Directory(
-        path.join(
-          makeConfig.packagingDirectory.path,
-          '${makeConfig.appName}.AppDir/lib',
-        ),
-      )
-          .listSync()
-          .where((e) => !defaultSharedObjects.contains(path.basename(e.path)));
+      final appSOLibs =
+          Directory(
+            path.join(
+              makeConfig.packagingDirectory.path,
+              '${makeConfig.appName}.AppDir/lib',
+            ),
+          ).listSync().where(
+            (e) => !defaultSharedObjects.contains(path.basename(e.path)),
+          );
 
       await $('mkdir', [
         '-p',
@@ -212,26 +212,23 @@ class AppPackageMakerAppImage extends AppPackageMaker {
 
       await Future.wait(
         appSOLibs.map((so) async {
-          final referencedSharedLibs =
-              await _getSharedDependencies(so.path).then(
-            (d) => d.difference(libFlutterGtkDeps)
-              ..removeWhere(
-                (lib) => lib.contains('libflutter_linux_gtk.so'),
-              ),
-          );
+          final referencedSharedLibs = await _getSharedDependencies(so.path)
+              .then(
+                (d) => d.difference(libFlutterGtkDeps)
+                  ..removeWhere(
+                    (lib) => lib.contains('libflutter_linux_gtk.so'),
+                  ),
+              );
 
           if (referencedSharedLibs.isEmpty) return;
 
-          await $(
-            'cp',
-            [
-              ...referencedSharedLibs,
-              path.join(
-                makeConfig.packagingDirectory.path,
-                '${makeConfig.appName}.AppDir/usr/lib',
-              ),
-            ],
-          ).then((value) {
+          await $('cp', [
+            ...referencedSharedLibs,
+            path.join(
+              makeConfig.packagingDirectory.path,
+              '${makeConfig.appName}.AppDir/usr/lib',
+            ),
+          ]).then((value) {
             if (value.exitCode != 0) {
               throw MakeError(value.stderr as String);
             }
@@ -241,21 +238,23 @@ class AppPackageMakerAppImage extends AppPackageMaker {
 
       await Future.wait(
         makeConfig.include.map((so) async {
-          final file = await $('locate', [so]).then((value) {
-            if (value.exitCode != 0) {
-              throw MakeError(value.stderr as String);
-            }
-            return value.stdout as String;
-          }).then((out) {
-            final paths = out
-                .split('\n')
-                .where((p) => p.isNotEmpty && !p.contains('/Trash'))
-                .toList();
-            if (paths.isEmpty) {
-              throw MakeError("Can't find specified shared object $so");
-            }
-            return File(paths.first.trim());
-          });
+          final file = await $('locate', [so])
+              .then((value) {
+                if (value.exitCode != 0) {
+                  throw MakeError(value.stderr as String);
+                }
+                return value.stdout as String;
+              })
+              .then((out) {
+                final paths = out
+                    .split('\n')
+                    .where((p) => p.isNotEmpty && !p.contains('/Trash'))
+                    .toList();
+                if (paths.isEmpty) {
+                  throw MakeError("Can't find specified shared object $so");
+                }
+                return File(paths.first.trim());
+              });
 
           await file.copy(
             path.join(
@@ -280,9 +279,7 @@ class AppPackageMakerAppImage extends AppPackageMaker {
           ),
           outputMakeConfig.outputFile.path,
         ],
-        environment: {
-          'ARCH': 'x86_64',
-        },
+        environment: {'ARCH': 'x86_64'},
       ).then((value) {
         if (value.exitCode != 0) {
           throw MakeError(value.stderr as String);

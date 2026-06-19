@@ -5,17 +5,11 @@ import 'package:test/test.dart';
 void main() {
   group('ios result', () {
     test('profile mode', () {
-      final r = BuildIosResult(
-        BuildConfig(
-          arguments: {'profile': true},
-        ),
-      );
+      final r = BuildIosResult(BuildConfig(arguments: {'profile': true}));
       expect(r.outputDirectory.path, 'build/ios/ipa');
     });
     test('release mode', () {
-      final r = BuildIosResult(
-        BuildConfig(),
-      );
+      final r = BuildIosResult(BuildConfig());
       expect(r.outputDirectory.path, 'build/ios/ipa');
     });
   });

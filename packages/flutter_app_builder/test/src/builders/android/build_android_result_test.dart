@@ -6,31 +6,23 @@ void main() {
   group('android aab result', () {
     test('profile mode', () {
       final r = BuildAndroidResult.aab(
-        BuildConfig(
-          arguments: {'profile': true},
-        ),
+        BuildConfig(arguments: {'profile': true}),
       );
       expect(r.outputDirectory.path, 'build/app/outputs/bundle/profile');
     });
     test('profile mode + flavor', () {
       final r = BuildAndroidResult.aab(
-        BuildConfig(
-          arguments: {'profile': true, 'flavor': 'dev'},
-        ),
+        BuildConfig(arguments: {'profile': true, 'flavor': 'dev'}),
       );
       expect(r.outputDirectory.path, 'build/app/outputs/bundle/devProfile');
     });
     test('release mode', () {
-      final r = BuildAndroidResult.aab(
-        BuildConfig(),
-      );
+      final r = BuildAndroidResult.aab(BuildConfig());
       expect(r.outputDirectory.path, 'build/app/outputs/bundle/release');
     });
     test('release mode + flavor', () {
       final r = BuildAndroidResult.aab(
-        BuildConfig(
-          arguments: {'flavor': 'dev'},
-        ),
+        BuildConfig(arguments: {'flavor': 'dev'}),
       );
       expect(r.outputDirectory.path, 'build/app/outputs/bundle/devRelease');
     });
@@ -38,32 +30,24 @@ void main() {
   group('android apk result', () {
     test('profile mode', () {
       final r = BuildAndroidResult.apk(
-        BuildConfig(
-          arguments: {'profile': true},
-        ),
+        BuildConfig(arguments: {'profile': true}),
       );
       expect(r.outputDirectory.path, 'build/app/outputs/flutter-apk');
     });
     test('profile mode + flavor', () {
       final r = BuildAndroidResult.apk(
-        BuildConfig(
-          arguments: {'profile': true, 'flavor': 'dev'},
-        ),
+        BuildConfig(arguments: {'profile': true, 'flavor': 'dev'}),
       );
       expect(r.outputDirectory.path, 'build/app/outputs/flutter-apk');
     });
     test('release mode', () {
-      final r = BuildAndroidResult.apk(
-        BuildConfig(),
-      );
+      final r = BuildAndroidResult.apk(BuildConfig());
       expect(r.outputDirectory.path, 'build/app/outputs/flutter-apk');
     });
 
     test('release mode + flavor', () {
       final r = BuildAndroidResult.apk(
-        BuildConfig(
-          arguments: {'flavor': 'dev'},
-        ),
+        BuildConfig(arguments: {'flavor': 'dev'}),
       );
       String dirPath = r.outputDirectory.path;
       expect(dirPath, 'build/app/outputs/flutter-apk');

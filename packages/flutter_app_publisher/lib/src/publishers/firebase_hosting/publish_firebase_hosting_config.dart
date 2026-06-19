@@ -1,9 +1,7 @@
 import 'package:flutter_app_publisher/src/api/app_package_publisher.dart';
 
 class PublishFirebaseHostingConfig extends PublishConfig {
-  PublishFirebaseHostingConfig({
-    required this.projectId,
-  });
+  PublishFirebaseHostingConfig({required this.projectId});
 
   factory PublishFirebaseHostingConfig.parse(
     Map<String, String>? environment,

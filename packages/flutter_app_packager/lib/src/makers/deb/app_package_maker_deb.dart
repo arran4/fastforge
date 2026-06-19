@@ -48,8 +48,10 @@ class AppPackageMakerDeb extends AppPackageMaker {
     /// /usr/share/icons/hicolor/256x256/apps
 
     final debianDir = path.join(packagingDirectory.path, 'DEBIAN');
-    final applicationsDir =
-        path.join(packagingDirectory.path, 'usr/share/applications');
+    final applicationsDir = path.join(
+      packagingDirectory.path,
+      'usr/share/applications',
+    );
     final icon128Dir = path.join(
       packagingDirectory.path,
       'usr/share/icons/hicolor/128x128/apps',
@@ -58,8 +60,10 @@ class AppPackageMakerDeb extends AppPackageMaker {
       packagingDirectory.path,
       'usr/share/icons/hicolor/256x256/apps',
     );
-    final metainfoDir =
-        path.join(packagingDirectory.path, 'usr/share/metainfo');
+    final metainfoDir = path.join(
+      packagingDirectory.path,
+      'usr/share/metainfo',
+    );
     final mkdirProcessResult = await $('mkdir', [
       '-p',
       debianDir,
@@ -91,8 +95,10 @@ class AppPackageMakerDeb extends AppPackageMaker {
       );
     }
     if (makeConfig.metainfo != null) {
-      final metainfoPath =
-          path.join(Directory.current.path, makeConfig.metainfo!);
+      final metainfoPath = path.join(
+        Directory.current.path,
+        makeConfig.metainfo!,
+      );
       final metainfoFile = File(metainfoPath);
       if (!metainfoFile.existsSync()) {
         throw MakeError("Metainfo $metainfoPath path wasn't found");
@@ -109,8 +115,9 @@ class AppPackageMakerDeb extends AppPackageMaker {
     final controlFile = File(path.join(debianDir, 'control'));
     final postinstFile = File(path.join(debianDir, 'postinst'));
     final postrmFile = File(path.join(debianDir, 'postrm'));
-    final desktopEntryFile =
-        File(path.join(applicationsDir, '${makeConfig.appBinaryName}.desktop'));
+    final desktopEntryFile = File(
+      path.join(applicationsDir, '${makeConfig.appBinaryName}.desktop'),
+    );
 
     if (!controlFile.existsSync()) controlFile.createSync();
     if (!postinstFile.existsSync()) postinstFile.createSync();

@@ -236,11 +236,11 @@ class CommandPublish extends Command {
 
   @override
   String get description => [
-        'Publish the built Flutter application artifacts to distribution platforms',
-        '',
-        'This command uploads your application bundle to specified target providers',
-        'Use --targets to specify one or more distribution platforms',
-      ].join('\n');
+    'Publish the built Flutter application artifacts to distribution platforms',
+    '',
+    'This command uploads your application bundle to specified target providers',
+    'Use --targets to specify one or more distribution platforms',
+  ].join('\n');
 
   @override
   Future run() async {
@@ -312,8 +312,8 @@ class CommandPublish extends Command {
 
     final fileSystemEntity =
         await FileSystemEntity.type(path) == FileSystemEntityType.directory
-            ? Directory(path)
-            : File(path);
+        ? Directory(path)
+        : File(path);
 
     return distributor.publish(
       fileSystemEntity,

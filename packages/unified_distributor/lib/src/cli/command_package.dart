@@ -34,6 +34,7 @@ class CommandPackage extends Command {
         'app',
         'appimage',
         'deb',
+        'flatpak',
         'dmg',
         'exe',
         'hap',
@@ -101,11 +102,11 @@ class CommandPackage extends Command {
 
   @override
   String get description => [
-        'Package the current Flutter application for distribution',
-        '',
-        'Options prefixed with --build- are passed directly to \'flutter build\'',
-        'For more details on build options, refer to the \'flutter build\' documentation.',
-      ].join('\n');
+    'Package the current Flutter application for distribution',
+    '',
+    'Options prefixed with --build- are passed directly to \'flutter build\'',
+    'For more details on build options, refer to the \'flutter build\' documentation.',
+  ].join('\n');
 
   @override
   Future run() async {
@@ -118,8 +119,9 @@ class CommandPackage extends Command {
     final String? artifactName = argResults?['artifact-name'];
     final String? flutterBuildArgs = argResults?['flutter-build-args'];
     final bool isSkipClean = argResults?.wasParsed('skip-clean') ?? false;
-    final Map<String, dynamic> buildArguments =
-        _generateBuildArgs(flutterBuildArgs);
+    final Map<String, dynamic> buildArguments = _generateBuildArgs(
+      flutterBuildArgs,
+    );
 
     // At least `platform` and one `targets` is required for flutter build
     if (platform == null) {
@@ -160,10 +162,7 @@ class CommandPackage extends Command {
         );
       }
 
-      buildArguments.putIfAbsent(
-        option.replaceAll('build-', ''),
-        () => value,
-      );
+      buildArguments.putIfAbsent(option.replaceAll('build-', ''), () => value);
     }
 
     for (var arg in flutterBuildArgs?.split(',') ?? <String>[]) {
@@ -173,10 +172,7 @@ class CommandPackage extends Command {
           () => arg.split('=').last,
         );
       } else if (arg.split('=').length == 1) {
-        buildArguments.putIfAbsent(
-          arg.split('=')[0],
-          () => true,
-        );
+        buildArguments.putIfAbsent(arg.split('=')[0], () => true);
       } else {
         buildArguments.putIfAbsent(arg, () => true);
       }

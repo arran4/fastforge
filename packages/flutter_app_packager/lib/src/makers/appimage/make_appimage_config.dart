@@ -22,11 +22,7 @@ class AppImageAction {
   List<String> arguments;
 
   Map<String, dynamic> toJson() {
-    return {
-      'label': label,
-      'name': name,
-      'arguments': arguments,
-    };
+    return {'label': label, 'name': name, 'arguments': arguments};
   }
 }
 
@@ -93,14 +89,16 @@ class MakeAppImageConfig extends MakeConfig {
         'Actions': this.actions.map((e) => e.label).join(';'),
     }.entries.map((e) => '${e.key}=${e.value}').join('\n');
 
-    final actions = this.actions.map((action) {
-      final fields = {
-        'Name': action.name,
-        'Exec':
-            'LD_LIBRARY_PATH=usr/lib $appName ${action.arguments.join(' ')} %u',
-      };
-      return '[Desktop Action ${action.label}]\n${fields.entries.map((e) => '${e.key}=${e.value}').join('\n')}';
-    }).join('\n\n');
+    final actions = this.actions
+        .map((action) {
+          final fields = {
+            'Name': action.name,
+            'Exec':
+                'LD_LIBRARY_PATH=usr/lib $appName ${action.arguments.join(' ')} %u',
+          };
+          return '[Desktop Action ${action.label}]\n${fields.entries.map((e) => '${e.key}=${e.value}').join('\n')}';
+        })
+        .join('\n\n');
 
     return '[Desktop Entry]\n$fields\n\n$actions';
   }

@@ -151,8 +151,8 @@ class MakeDebConfig extends MakeLinuxPackageConfig {
     this.replaces,
     this.conflicts,
     this.supportedMimeType,
-  })  : _postinstallScripts = postinstallScripts ?? [],
-        _postuninstallScripts = postuninstallScripts ?? [];
+  }) : _postinstallScripts = postinstallScripts ?? [],
+       _postuninstallScripts = postuninstallScripts ?? [];
 
   factory MakeDebConfig.fromJson(Map<String, dynamic> map) {
     return MakeDebConfig(
@@ -258,15 +258,15 @@ class MakeDebConfig extends MakeLinuxPackageConfig {
   List<String>? categories;
 
   List<String> get postinstallScripts => [
-        'ln -s /usr/share/$appBinaryName/$appBinaryName /usr/bin/$appBinaryName',
-        'chmod +x /usr/bin/$appBinaryName',
-        ..._postinstallScripts,
-      ];
+    'ln -s /usr/share/$appBinaryName/$appBinaryName /usr/bin/$appBinaryName',
+    'chmod +x /usr/bin/$appBinaryName',
+    ..._postinstallScripts,
+  ];
 
   List<String> get postuninstallScripts => [
-        'rm /usr/bin/$appBinaryName',
-        ..._postuninstallScripts,
-      ];
+    'rm /usr/bin/$appBinaryName',
+    ..._postuninstallScripts,
+  ];
 
   @override
   Map<String, dynamic> toJson() {
@@ -278,8 +278,9 @@ class MakeDebConfig extends MakeLinuxPackageConfig {
         'Section': section,
         'Priority': priority,
         'Architecture': _getArchitecture(),
-        'Essential':
-            essential != null ? (essential == true ? 'yes' : 'no') : null,
+        'Essential': essential != null
+            ? (essential == true ? 'yes' : 'no')
+            : null,
         'Installed-Size': installedSize,
         'Description': pubspec.description,
         'Homepage': pubspec.homepage,
@@ -324,32 +325,22 @@ class MakeDebConfig extends MakeLinuxPackageConfig {
   Map<String, String> toFilesString() {
     final json = toJson();
     final controlFile =
-        '${(json['CONTROL'] as Map<String, dynamic>).entries.map(
-              (e) => '${e.key}: ${e.value}',
-            ).join('\n')}\n';
+        '${(json['CONTROL'] as Map<String, dynamic>).entries.map((e) => '${e.key}: ${e.value}').join('\n')}\n';
 
     final desktopFile = [
       '[Desktop Entry]',
       ...(json['DESKTOP'] as Map<String, dynamic>).entries.map(
-            (e) => '${e.key}=${e.value}',
-          ),
+        (e) => '${e.key}=${e.value}',
+      ),
     ].join('\n');
     final map = {
       'CONTROL': controlFile,
       'DESKTOP': desktopFile,
       'postinst': postinstallScripts.isNotEmpty
-          ? [
-              '#!/usr/bin/env sh',
-              ...postinstallScripts,
-              'exit 0',
-            ].join('\n')
+          ? ['#!/usr/bin/env sh', ...postinstallScripts, 'exit 0'].join('\n')
           : null,
       'postrm': postuninstallScripts.isNotEmpty
-          ? [
-              '#!/usr/bin/env sh',
-              ...postuninstallScripts,
-              'exit 0',
-            ].join('\n')
+          ? ['#!/usr/bin/env sh', ...postuninstallScripts, 'exit 0'].join('\n')
           : null,
     }..removeWhere((key, value) => value == null);
     return Map.castFrom<String, String?, String, String>(map);

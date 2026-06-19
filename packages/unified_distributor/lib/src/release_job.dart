@@ -31,25 +31,17 @@ class ReleaseJobPackage {
 }
 
 class ReleaseJobPublish {
-  ReleaseJobPublish({
-    required this.target,
-    this.args,
-  });
+  ReleaseJobPublish({required this.target, this.args});
 
   factory ReleaseJobPublish.fromJson(Map<String, dynamic> json) {
-    return ReleaseJobPublish(
-      target: json['target'],
-      args: json['args'],
-    );
+    return ReleaseJobPublish(target: json['target'], args: json['args']);
   }
   final String target;
   final Map<String, dynamic>? args;
 
   Map<String, dynamic> toJson() {
-    return {
-      'target': target,
-      'args': args,
-    }..removeWhere((key, value) => value == null);
+    return {'target': target, 'args': args}
+      ..removeWhere((key, value) => value == null);
   }
 }
 

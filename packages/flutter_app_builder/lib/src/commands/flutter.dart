@@ -28,7 +28,8 @@ class FlutterVersion {
       engineRevision: json['engineRevision'] as String?,
       dartSdkVersion: json['dartSdkVersion'] as String?,
       devToolsVersion: json['devToolsVersion'] as String?,
-      flutterVersion: json['flutterVersion'] as String? ??
+      flutterVersion:
+          json['flutterVersion'] as String? ??
           (json['frameworkVersion'] as String?),
     );
   }
@@ -83,24 +84,16 @@ class _Flutter extends Command {
     );
     final String jsonString = '${result.stdout}';
     return FlutterVersion.fromJson(
-      Map<String, dynamic>.from(
-        json.decode(jsonString) as Map,
-      ),
+      Map<String, dynamic>.from(json.decode(jsonString) as Map),
     );
   }
 
   Future<void> clean() {
-    return exec(
-      ['clean'],
-      environment: environment,
-    );
+    return exec(['clean'], environment: environment);
   }
 
   Future<ProcessResult> build(List<String> arguments) {
-    return exec(
-      ['build', ...arguments],
-      environment: environment,
-    );
+    return exec(['build', ...arguments], environment: environment);
   }
 
   @override

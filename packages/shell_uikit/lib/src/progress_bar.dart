@@ -181,10 +181,13 @@ class ProgressBar {
   /// Renders the current state of the progress bar to stdout.
   void render() {
     // Calculate the bar complete size
-    final barCompleteSize =
-        ((_value / _total) * barSize).round().clamp(0, barSize);
+    final barCompleteSize = ((_value / _total) * barSize).round().clamp(
+      0,
+      barSize,
+    );
 
-    final bar = barCompleteChar * barCompleteSize +
+    final bar =
+        barCompleteChar * barCompleteSize +
         barIncompleteChar * (barSize - barCompleteSize);
 
     final percentage = (_value * 100 / _total).toStringAsFixed(1);
