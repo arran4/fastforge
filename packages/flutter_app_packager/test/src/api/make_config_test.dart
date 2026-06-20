@@ -15,10 +15,7 @@ void main() {
         ..platform = 'android'
         ..packageFormat = 'apk'
         ..outputDirectory = Directory('dist/')
-        ..pubspec = Pubspec(
-          'test_app',
-          version: Version.parse('1.0.0'),
-        );
+        ..pubspec = Pubspec('test_app', version: Version.parse('1.0.0'));
       expect(
         makeConfig.outputArtifactPath,
         'dist/1.0.0/test_app-1.0.0-android.apk',
@@ -32,10 +29,7 @@ void main() {
         ..platform = 'android'
         ..packageFormat = 'apk'
         ..outputDirectory = Directory('dist/')
-        ..pubspec = Pubspec(
-          'test_app',
-          version: Version.parse('1.0.0+1'),
-        );
+        ..pubspec = Pubspec('test_app', version: Version.parse('1.0.0+1'));
       expect(
         makeConfig.outputArtifactPath,
         'dist/1.0.0+1/test_app-1.0.0+1-android.apk',

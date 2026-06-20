@@ -22,19 +22,18 @@ class AppPackagePublisherFirebase extends AppPackagePublisher {
     PublishProgressCallback? onPublishProgress,
   }) async {
     File file = fileSystemEntity as File;
-    PublishFirebaseConfig publishConfig =
-        PublishFirebaseConfig.parse(environment, publishArguments);
+    PublishFirebaseConfig publishConfig = PublishFirebaseConfig.parse(
+      environment,
+      publishArguments,
+    );
 
     // Publish to Firebase
-    ProcessResult processResult = await $(
-      'firebase',
-      [
-        'appdistribution:distribute',
-        file.path,
-        // cmd list
-        ...publishConfig.toFirebaseCliDistributeArgs(),
-      ],
-    );
+    ProcessResult processResult = await $('firebase', [
+      'appdistribution:distribute',
+      file.path,
+      // cmd list
+      ...publishConfig.toFirebaseCliDistributeArgs(),
+    ]);
     if (processResult.exitCode == 0) {
       return PublishResult(
         url: 'https://console.firebase.google.com/project/_/appdistribution',

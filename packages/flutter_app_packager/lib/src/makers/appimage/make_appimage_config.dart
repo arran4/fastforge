@@ -22,11 +22,7 @@ class AppImageAction {
   List<String> arguments;
 
   Map<String, dynamic> toJson() {
-    return {
-      'label': label,
-      'name': name,
-      'arguments': arguments,
-    };
+    return {'label': label, 'name': name, 'arguments': arguments};
   }
 }
 

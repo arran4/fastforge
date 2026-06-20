@@ -6,11 +6,10 @@ import 'package:glob/glob.dart';
 import 'package:glob/list_local_fs.dart';
 
 class BuildOhosResultResolver extends BuildResultResolver {
-  BuildOhosResultResolver(
-    this.target,
-  ) : _actualResultResolver = target == 'hap'
-            ? _BuildOhosHapResultResolver()
-            : _BuildOhosAppResultResolver();
+  BuildOhosResultResolver(this.target)
+    : _actualResultResolver = target == 'hap'
+          ? _BuildOhosHapResultResolver()
+          : _BuildOhosAppResultResolver();
 
   factory BuildOhosResultResolver.hap() {
     return BuildOhosResultResolver('hap');
@@ -32,10 +31,10 @@ class BuildOhosResultResolver extends BuildResultResolver {
 
 class BuildOhosResult extends BuildResult {
   BuildOhosResult(this.target, BuildConfig config)
-      : _actualResult = target == 'hap'
-            ? _BuildOhosHapResult(config)
-            : _BuildOhosAppResult(config),
-        super(config);
+    : _actualResult = target == 'hap'
+          ? _BuildOhosHapResult(config)
+          : _BuildOhosAppResult(config),
+      super(config);
 
   factory BuildOhosResult.hap(BuildConfig config) {
     return BuildOhosResult('hap', config);

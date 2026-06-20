@@ -47,11 +47,7 @@ class AppPackagePublisherAppGallery extends AppPackagePublisher {
       );
 
       // Upload file (3/4)
-      await uploadFile(
-        uploadUrlInfo,
-        file,
-        onPublishProgress,
-      );
+      await uploadFile(uploadUrlInfo, file, onPublishProgress);
 
       // Apply Package Info (4/4)
       await applyUpload(
@@ -71,10 +67,7 @@ class AppPackagePublisherAppGallery extends AppPackagePublisher {
     }
   }
 
-  Future<String> getAccessToken(
-    String clientId,
-    String clientSecret,
-  ) async {
+  Future<String> getAccessToken(String clientId, String clientSecret) async {
     Map<String, dynamic> data = {
       'grant_type': 'client_credentials',
       'client_id': clientId,
@@ -172,10 +165,7 @@ class AppPackagePublisherAppGallery extends AppPackagePublisher {
       'releaseType': 1,
       'releasePhase': 0,
     };
-    Map<String, dynamic> data = {
-      'fileName': fileName,
-      'objectId': objectId,
-    };
+    Map<String, dynamic> data = {'fileName': fileName, 'objectId': objectId};
     try {
       Response response = await _dio.put(
         'https://connect-api.cloud.huawei.com/api/publish/v3/app-package-info',

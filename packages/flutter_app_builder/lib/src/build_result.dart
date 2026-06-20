@@ -3,11 +3,7 @@ import 'dart:io';
 import 'package:flutter_app_builder/src/build_config.dart';
 
 abstract class BuildResult {
-  BuildResult(
-    this.config, {
-    this.duration,
-    this.outputFiles = const [],
-  });
+  BuildResult(this.config, {this.duration, this.outputFiles = const []});
 
   final BuildConfig config;
   Duration? duration;

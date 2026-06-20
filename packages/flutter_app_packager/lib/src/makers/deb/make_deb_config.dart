@@ -324,9 +324,7 @@ class MakeDebConfig extends MakeLinuxPackageConfig {
   Map<String, String> toFilesString() {
     final json = toJson();
     final controlFile =
-        '${(json['CONTROL'] as Map<String, dynamic>).entries.map(
-              (e) => '${e.key}: ${e.value}',
-            ).join('\n')}\n';
+        '${(json['CONTROL'] as Map<String, dynamic>).entries.map((e) => '${e.key}: ${e.value}').join('\n')}\n';
 
     final desktopFile = [
       '[Desktop Entry]',
@@ -338,18 +336,10 @@ class MakeDebConfig extends MakeLinuxPackageConfig {
       'CONTROL': controlFile,
       'DESKTOP': desktopFile,
       'postinst': postinstallScripts.isNotEmpty
-          ? [
-              '#!/usr/bin/env sh',
-              ...postinstallScripts,
-              'exit 0',
-            ].join('\n')
+          ? ['#!/usr/bin/env sh', ...postinstallScripts, 'exit 0'].join('\n')
           : null,
       'postrm': postuninstallScripts.isNotEmpty
-          ? [
-              '#!/usr/bin/env sh',
-              ...postuninstallScripts,
-              'exit 0',
-            ].join('\n')
+          ? ['#!/usr/bin/env sh', ...postuninstallScripts, 'exit 0'].join('\n')
           : null,
     }..removeWhere((key, value) => value == null);
     return Map.castFrom<String, String?, String, String>(map);

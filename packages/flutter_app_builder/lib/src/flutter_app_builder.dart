@@ -15,9 +15,7 @@ class FlutterAppBuilder {
     AppBuilderWindows(),
   ];
 
-  Future<void> clean({
-    Map<String, String>? environment,
-  }) async {
+  Future<void> clean({Map<String, String>? environment}) async {
     await flutter.withEnv(environment).clean();
   }
 
@@ -33,9 +31,6 @@ class FlutterAppBuilder {
         '${builder.runtimeType} is not supported on the current platform',
       );
     }
-    return builder.build(
-      arguments: arguments,
-      environment: environment,
-    );
+    return builder.build(arguments: arguments, environment: environment);
   }
 }

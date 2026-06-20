@@ -1,8 +1,5 @@
 class CheckVersionResult {
-  CheckVersionResult({
-    this.latestVersion,
-    this.currentVersion,
-  });
+  CheckVersionResult({this.latestVersion, this.currentVersion});
   final String? latestVersion;
   final String? currentVersion;
 

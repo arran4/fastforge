@@ -271,9 +271,7 @@ class MakePacmanConfig extends MakeLinuxPackageConfig {
   Map<String, String> toFilesString() {
     final json = toJson();
     final pkginfoFile =
-        '${(json['PKGINFO'] as Map<String, dynamic>).entries.map(
-              (e) => '${e.key}=${e.value}',
-            ).join('\n')}\n';
+        '${(json['PKGINFO'] as Map<String, dynamic>).entries.map((e) => '${e.key}=${e.value}').join('\n')}\n';
     final installFileMap = {
       'post_install': postinstallScripts.join('\n\t'),
       'post_upgrade':
@@ -282,9 +280,7 @@ class MakePacmanConfig extends MakeLinuxPackageConfig {
     }..removeWhere((key, value) => value == null);
 
     final installFile = installFileMap.entries
-        .map(
-          (e) => '${e.key}() {\n\t${e.value}\n}',
-        )
+        .map((e) => '${e.key}() {\n\t${e.value}\n}')
         .join('\n');
 
     final desktopFile = [

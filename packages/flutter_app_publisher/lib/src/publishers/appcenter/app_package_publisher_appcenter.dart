@@ -16,13 +16,13 @@ class AppPackagePublisherAppCenter extends AppPackagePublisher {
 
   @override
   List<String> get supportedPlatforms => [
-        'android',
-        'ios',
-        'linux',
-        'macos',
-        'windows',
-        'web',
-      ];
+    'android',
+    'ios',
+    'linux',
+    'macos',
+    'windows',
+    'web',
+  ];
 
   @override
   Future<PublishResult> publish(
@@ -38,9 +38,7 @@ class AppPackagePublisherAppCenter extends AppPackagePublisher {
     );
     _dio.options = BaseOptions(
       baseUrl: 'https://api.appcenter.ms/v0.1',
-      headers: {
-        'X-API-Token': publishConfig.apiToken,
-      },
+      headers: {'X-API-Token': publishConfig.apiToken},
     );
     // _dio.interceptors.add(LogInterceptor(
     //   requestBody: true,
@@ -155,10 +153,7 @@ class AppPackagePublisherAppCenter extends AppPackagePublisher {
     String chunkingPath = '${file.path}_chunking/';
     await $('rm', ['-rf', chunkingPath]);
     await $('mkdir', [chunkingPath]);
-    await $(
-      'split',
-      ['-b', '$chunkSize', file.path, chunkingPath],
-    );
+    await $('split', ['-b', '$chunkSize', file.path, chunkingPath]);
 
     Directory chunkingDir = Directory(chunkingPath);
     List<FileSystemEntity> entityList = chunkingDir.listSync();
@@ -205,10 +200,7 @@ class AppPackagePublisherAppCenter extends AppPackagePublisher {
   }) async {
     final response = await _dio.patch(
       '/apps/$ownerName/$appName/uploads/releases/$releasesId',
-      data: {
-        'upload_status': 'uploadFinished',
-        'id': releasesId,
-      },
+      data: {'upload_status': 'uploadFinished', 'id': releasesId},
     );
 
     return Map<String, dynamic>.from(response.data);

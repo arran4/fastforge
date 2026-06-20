@@ -11,13 +11,13 @@ class AppPackagePublisherMinio extends AppPackagePublisher {
 
   @override
   List<String> get supportedPlatforms => [
-        'android',
-        'ios',
-        'linux',
-        'macos',
-        'windows',
-        'web',
-      ];
+    'android',
+    'ios',
+    'linux',
+    'macos',
+    'windows',
+    'web',
+  ];
 
   @override
   Future<PublishResult> publish(
@@ -58,9 +58,7 @@ class AppPackagePublisherMinio extends AppPackagePublisher {
           }
         },
       );
-      return PublishResult(
-        url: 'https://${publishConfig.endPoint}/$saveKey',
-      );
+      return PublishResult(url: 'https://${publishConfig.endPoint}/$saveKey');
     } on MinioError catch (error) {
       throw PublishError('${error.message}');
     } catch (error) {

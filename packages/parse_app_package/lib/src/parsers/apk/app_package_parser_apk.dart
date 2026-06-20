@@ -19,21 +19,27 @@ class AppPackageParserApk extends AppPackageParser {
         .firstWhere((element) => !element.path.contains('.DS_Store'))
         .path;
 
-    ProcessResult processResult = await $(
-      '$buildToolsDir/aapt',
-      ['d', '--values', 'badging', file.path],
-    );
+    ProcessResult processResult = await $('$buildToolsDir/aapt', [
+      'd',
+      '--values',
+      'badging',
+      file.path,
+    ]);
 
     String resultString = processResult.stdout;
 
-    RegExpMatch? regExpMatch1 =
-        RegExp(r"name='([^']+)'").firstMatch(resultString);
-    RegExpMatch? regExpMatch2 =
-        RegExp(r"application-label:'([^']+)'").firstMatch(resultString);
-    RegExpMatch? regExpMatch3 =
-        RegExp(r"versionName='([^']+)").firstMatch(resultString);
-    RegExpMatch? regExpMatch4 =
-        RegExp(r"versionCode='(\d+)'").firstMatch(resultString);
+    RegExpMatch? regExpMatch1 = RegExp(
+      r"name='([^']+)'",
+    ).firstMatch(resultString);
+    RegExpMatch? regExpMatch2 = RegExp(
+      r"application-label:'([^']+)'",
+    ).firstMatch(resultString);
+    RegExpMatch? regExpMatch3 = RegExp(
+      r"versionName='([^']+)",
+    ).firstMatch(resultString);
+    RegExpMatch? regExpMatch4 = RegExp(
+      r"versionCode='(\d+)'",
+    ).firstMatch(resultString);
 
     AppPackage appPackage = AppPackage(
       platform: 'android',

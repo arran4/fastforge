@@ -37,8 +37,9 @@ class AppPackageMakerMsix extends AppPackageMaker {
     required MakeMsixConfig makeConfig,
   }) async {
     makeConfig.output_path = makeConfig.outputFile.parent.path;
-    makeConfig.output_name =
-        p.basenameWithoutExtension(makeConfig.outputFile.path);
+    makeConfig.output_name = p.basenameWithoutExtension(
+      makeConfig.outputFile.path,
+    );
     makeConfig.build_windows = 'false';
 
     Map<String, dynamic> makeConfigJson = makeConfig.toJson();

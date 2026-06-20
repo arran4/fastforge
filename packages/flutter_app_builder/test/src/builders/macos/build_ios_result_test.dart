@@ -5,17 +5,11 @@ import 'package:test/test.dart';
 void main() {
   group('macos result', () {
     test('profile mode', () {
-      final r = BuildMacOsResult(
-        BuildConfig(
-          arguments: {'profile': true},
-        ),
-      );
+      final r = BuildMacOsResult(BuildConfig(arguments: {'profile': true}));
       expect(r.outputDirectory.path, 'build/macos/Build/Products/Profile');
     });
     test('release mode', () {
-      final r = BuildMacOsResult(
-        BuildConfig(),
-      );
+      final r = BuildMacOsResult(BuildConfig());
       expect(r.outputDirectory.path, 'build/macos/Build/Products/Release');
     });
   });

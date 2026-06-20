@@ -78,8 +78,9 @@ class MakeConfig {
 
     String filename = Template(useArtifactName).renderString(variables);
 
-    Directory versionOutputDirectory =
-        Directory('${outputDirectory.path}$appVersion');
+    Directory versionOutputDirectory = Directory(
+      '${outputDirectory.path}$appVersion',
+    );
 
     if (!versionOutputDirectory.existsSync()) {
       versionOutputDirectory.createSync(recursive: true);

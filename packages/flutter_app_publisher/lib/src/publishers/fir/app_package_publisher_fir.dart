@@ -14,9 +14,7 @@ class AppPackagePublisherFir extends AppPackagePublisher {
   @override
   List<String> get supportedPlatforms => ['android', 'ios'];
 
-  final Dio _dio = Dio(
-    BaseOptions(baseUrl: 'http://api.bq04.com'),
-  );
+  final Dio _dio = Dio(BaseOptions(baseUrl: 'http://api.bq04.com'));
 
   Future<String> _uploadAppBinary(
     File file,
@@ -60,9 +58,7 @@ class AppPackagePublisherFir extends AppPackagePublisher {
       throw PublishError('Missing `$kEnvFirApiToken` environment variable.');
     }
 
-    PublishFirConfig publishConfig = PublishFirConfig(
-      apiToken: apiToken!,
-    );
+    PublishFirConfig publishConfig = PublishFirConfig(apiToken: apiToken!);
 
     try {
       AppPackage appPackage = await parseAppPackage(file);
@@ -95,9 +91,7 @@ class AppPackagePublisherFir extends AppPackagePublisher {
         queryParameters: {'release_id': releaseId},
       );
 
-      return PublishResult(
-        url: downloadUri.toString(),
-      );
+      return PublishResult(url: downloadUri.toString());
     } on DioException catch (error) {
       String? message;
       if (error.response?.data != null) {

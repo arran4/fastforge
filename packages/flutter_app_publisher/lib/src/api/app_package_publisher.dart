@@ -28,9 +28,7 @@ abstract class AppPackagePublisher {
 }
 
 class PublishConfig {
-  PublishConfig({
-    String? appVersion,
-  }) {
+  PublishConfig({String? appVersion}) {
     if (appVersion != null) {
       this.appVersion = Version.parse(appVersion);
     } else {
@@ -48,9 +46,7 @@ class PublishConfig {
 }
 
 class PublishResult {
-  PublishResult({
-    this.url,
-  });
+  PublishResult({this.url});
 
   final String? url;
 }

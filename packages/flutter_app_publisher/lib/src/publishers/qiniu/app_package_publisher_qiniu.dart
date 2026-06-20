@@ -11,12 +11,12 @@ class AppPackagePublisherQiniu extends AppPackagePublisher {
 
   @override
   List<String> get supportedPlatforms => [
-        'android',
-        'ios',
-        'linux',
-        'macos',
-        'windows',
-      ];
+    'android',
+    'ios',
+    'linux',
+    'macos',
+    'windows',
+  ];
 
   @override
   Future<PublishResult> publish(
@@ -67,9 +67,7 @@ class AppPackagePublisherQiniu extends AppPackagePublisher {
       PutResponse putResponse = await storage.putFile(
         file,
         uploadToken,
-        options: PutOptions(
-          controller: putController,
-        ),
+        options: PutOptions(controller: putController),
       );
       return PublishResult(
         url:

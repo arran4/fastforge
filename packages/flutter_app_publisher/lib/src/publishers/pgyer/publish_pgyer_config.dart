@@ -38,11 +38,13 @@ class PublishPgyerConfig extends PublishConfig {
       buildInstallType: _parseInt(publishArguments?['install-type']),
       buildPassword: _parseString(publishArguments?['password']),
       buildDescription: _parseString(publishArguments?['description']),
-      buildUpdateDescription:
-          _parseString(publishArguments?['update-description']),
+      buildUpdateDescription: _parseString(
+        publishArguments?['update-description'],
+      ),
       buildInstallDate: _parseInt(publishArguments?['install-date']),
-      buildInstallStartDate:
-          _parseString(publishArguments?['install-start-date']),
+      buildInstallStartDate: _parseString(
+        publishArguments?['install-start-date'],
+      ),
       buildInstallEndDate: _parseString(publishArguments?['install-end-date']),
       buildChannelShortcut: _parseString(publishArguments?['channel-shortcut']),
     );

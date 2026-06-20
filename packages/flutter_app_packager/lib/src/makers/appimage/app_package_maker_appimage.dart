@@ -28,25 +28,25 @@ class AppPackageMakerAppImage extends AppPackageMaker {
         throw MakeError(value.stderr as String);
       }
       return value.stdout as String;
-    }).then(
-      (lines) {
-        final soDeps = lines
-            .split('\n')
-            .where(
-              (line) => line.contains('=>') && line.trim().startsWith('lib'),
-            )
+    }).then((lines) {
+      final soDeps = lines
+          .split('\n')
+          .where(
+            (line) => line.contains('=>') && line.trim().startsWith('lib'),
+          )
 
-            /// converts this:
-            ///  libkeybinder-3.0.so.0 => /lib64/libkeybinder-3.0.so.0 (0x00007f6513811000)
-            /// to this:
-            ///  /lib64/libkeybinder-3.0.so.0
-            .map((line) => line.split(' => ')[1].trim().split(' ').first.trim())
-            .toList()
-          ..sort();
+          /// converts this:
+          ///  libkeybinder-3.0.so.0 => /lib64/libkeybinder-3.0.so.0 (0x00007f6513811000)
+          /// to this:
+          ///  /lib64/libkeybinder-3.0.so.0
+          .map(
+            (line) => line.split(' => ')[1].trim().split(' ').first.trim(),
+          )
+          .toList()
+        ..sort();
 
-        return soDeps.toSet();
-      },
-    );
+      return soDeps.toSet();
+    });
   }
 
   @override
@@ -125,11 +125,7 @@ class AppPackageMakerAppImage extends AppPackageMaker {
         '${makeConfig.appName}.AppDir/usr/share/icons/hicolor/128x128/apps',
       );
 
-      await $('mkdir', [
-        '-p',
-        icon128x128,
-        icon256x256,
-      ]).then((value) {
+      await $('mkdir', ['-p', icon128x128, icon256x256]).then((value) {
         if (value.exitCode != 0) {
           throw MakeError(value.stderr as String);
         }
@@ -154,16 +150,15 @@ class AppPackageMakerAppImage extends AppPackageMaker {
           makeConfig.packagingDirectory.path,
           '${makeConfig.appName}.AppDir/usr/share/metainfo',
         );
-        await $('mkdir', [
-          '-p',
-          metainfoDir,
-        ]).then((value) {
+        await $('mkdir', ['-p', metainfoDir]).then((value) {
           if (value.exitCode != 0) {
             throw MakeError(value.stderr as String);
           }
         });
-        final metainfoPath =
-            path.join(Directory.current.path, makeConfig.metainfo!);
+        final metainfoPath = path.join(
+          Directory.current.path,
+          makeConfig.metainfo!,
+        );
         final metainfoFile = File(metainfoPath);
         if (!metainfoFile.existsSync()) {
           throw MakeError("Metainfo $metainfoPath path doesn't exist");
@@ -187,9 +182,9 @@ class AppPackageMakerAppImage extends AppPackageMaker {
           makeConfig.packagingDirectory.path,
           '${makeConfig.appName}.AppDir/lib',
         ),
-      )
-          .listSync()
-          .where((e) => !defaultSharedObjects.contains(path.basename(e.path)));
+      ).listSync().where(
+            (e) => !defaultSharedObjects.contains(path.basename(e.path)),
+          );
 
       await $('mkdir', [
         '-p',
@@ -222,16 +217,13 @@ class AppPackageMakerAppImage extends AppPackageMaker {
 
           if (referencedSharedLibs.isEmpty) return;
 
-          await $(
-            'cp',
-            [
-              ...referencedSharedLibs,
-              path.join(
-                makeConfig.packagingDirectory.path,
-                '${makeConfig.appName}.AppDir/usr/lib',
-              ),
-            ],
-          ).then((value) {
+          await $('cp', [
+            ...referencedSharedLibs,
+            path.join(
+              makeConfig.packagingDirectory.path,
+              '${makeConfig.appName}.AppDir/usr/lib',
+            ),
+          ]).then((value) {
             if (value.exitCode != 0) {
               throw MakeError(value.stderr as String);
             }
@@ -280,9 +272,7 @@ class AppPackageMakerAppImage extends AppPackageMaker {
           ),
           outputMakeConfig.outputFile.path,
         ],
-        environment: {
-          'ARCH': 'x86_64',
-        },
+        environment: {'ARCH': 'x86_64'},
       ).then((value) {
         if (value.exitCode != 0) {
           throw MakeError(value.stderr as String);

@@ -13,13 +13,13 @@ class AppPackagePublisherGithub extends AppPackagePublisher {
 
   @override
   List<String> get supportedPlatforms => [
-        'android',
-        'ios',
-        'linux',
-        'macos',
-        'windows',
-        'web',
-      ];
+    'android',
+    'ios',
+    'linux',
+    'macos',
+    'windows',
+    'web',
+  ];
 
   @override
   Future<PublishResult> publish(
@@ -40,9 +40,7 @@ class AppPackagePublisherGithub extends AppPackagePublisher {
     );
     // Set auth
     _dio.options = BaseOptions(
-      headers: {
-        'Authorization': 'token ${publishConfig.token}',
-      },
+      headers: {'Authorization': 'token ${publishConfig.token}'},
     );
 
     // Get uploadUrl
@@ -59,11 +57,12 @@ class AppPackagePublisherGithub extends AppPackagePublisher {
       throw PublishError('Upload url isEmpty');
     }
     // Upload file
-    String browserDownloadUrl =
-        await _uploadReleaseAsset(file, uploadUrl!, onPublishProgress);
-    return PublishResult(
-      url: browserDownloadUrl,
+    String browserDownloadUrl = await _uploadReleaseAsset(
+      file,
+      uploadUrl!,
+      onPublishProgress,
     );
+    return PublishResult(url: browserDownloadUrl);
   }
 
   /// Get uploadUrl by releaseName
@@ -118,8 +117,10 @@ class AppPackagePublisherGithub extends AppPackagePublisher {
     String url = '$uploadUrl?name=${Uri.encodeComponent(fileName)}';
     // dio upload
     _dio.options.contentType = 'application/octet-stream';
-    _dio.options.headers
-        .putIfAbsent(Headers.contentLengthHeader, () => fileData.length);
+    _dio.options.headers.putIfAbsent(
+      Headers.contentLengthHeader,
+      () => fileData.length,
+    );
     String? browserDownloadUrl;
     try {
       Response resp = await _dio.post(

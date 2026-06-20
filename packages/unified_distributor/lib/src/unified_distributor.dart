@@ -25,10 +25,7 @@ class UnifiedDistributor {
   ///
   /// The [packageName] parameter is the name of the package to be distributed.
   /// The [displayName] parameter is the display name of the package.
-  UnifiedDistributor(
-    this.packageName,
-    this.displayName,
-  ) {
+  UnifiedDistributor(this.packageName, this.displayName) {
     ShellExecutor.global = DefaultShellExecutor();
   }
 
@@ -84,10 +81,7 @@ class UnifiedDistributor {
           json.decode(json.encode(yamlDoc)),
         );
       } else {
-        _distributeOptions = DistributeOptions(
-          output: 'dist/',
-          releases: [],
-        );
+        _distributeOptions = DistributeOptions(output: 'dist/', releases: []);
       }
     }
     return _distributeOptions!;
@@ -122,8 +116,9 @@ class UnifiedDistributor {
   /// available on pub.dev.
   Future<CheckVersionResult> checkVersion() async {
     String? currentVersion = await _getCurrentVersion();
-    String? latestVersion =
-        await PubDevApi.getLatestVersionFromPackage(packageName);
+    String? latestVersion = await PubDevApi.getLatestVersionFromPackage(
+      packageName,
+    );
     return CheckVersionResult(
       currentVersion: currentVersion,
       latestVersion: latestVersion,
@@ -186,8 +181,9 @@ class UnifiedDistributor {
         }
 
         if (buildResult != null) {
-          String buildMode =
-              buildArguments.containsKey('profile') ? 'profile' : 'release';
+          String buildMode = buildArguments.containsKey('profile')
+              ? 'profile'
+              : 'release';
           Map<String, dynamic>? arguments = {
             'build_mode': buildMode,
             'flavor': buildArguments['flavor'],
@@ -206,9 +202,7 @@ class UnifiedDistributor {
             const JsonEncoder.withIndent('  ').convert(makeResult.toJson()),
           );
           FileSystemEntity artifact = makeResult.artifacts.first;
-          logger.info(
-            'Successfully packaged ${artifact.path}'.brightGreen(),
-          );
+          logger.info('Successfully packaged ${artifact.path}'.brightGreen());
           makeResultList.add(makeResult);
         }
       }
@@ -245,10 +239,7 @@ class UnifiedDistributor {
           for (var key in publishArguments.keys) {
             // Keep app- prefixed arguments
             if (key.startsWith('app-')) {
-              newPublishArguments.putIfAbsent(
-                key,
-                () => publishArguments[key],
-              );
+              newPublishArguments.putIfAbsent(key, () => publishArguments[key]);
               continue;
             }
 
@@ -328,8 +319,9 @@ class UnifiedDistributor {
       List<Release> releases = distributeOptions.releases;
 
       if (name.isNotEmpty) {
-        releases =
-            distributeOptions.releases.where((e) => e.name == name).toList();
+        releases = distributeOptions.releases
+            .where((e) => e.name == name)
+            .toList();
       }
 
       if (releases.isEmpty) {
@@ -411,10 +403,7 @@ class UnifiedDistributor {
 
   /// Upgrade the package to the latest version
   Future<void> upgrade() async {
-    await $(
-      'dart',
-      ['pub', 'global', 'activate', packageName],
-    );
+    await $('dart', ['pub', 'global', 'activate', packageName]);
     return Future.value();
   }
 }
