@@ -36,6 +36,7 @@ class CommandPackage extends Command {
         'deb',
         'dmg',
         'exe',
+        'flatpak',
         'hap',
         'ipa',
         'msix',

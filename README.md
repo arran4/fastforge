@@ -36,7 +36,7 @@ Complete documentation is available at [fastforge.dev](https://fastforge.dev/).
 - **Android**: [AAB](https://fastforge.dev/makers/aab), [APK](https://fastforge.dev/makers/apk)
 - **iOS**: [IPA](https://fastforge.dev/makers/ipa)
 - **OpenHarmony**: [HAP](https://fastforge.dev/makers/hap), [APP](https://fastforge.dev/makers/app)
-- **Linux**: [AppImage](https://fastforge.dev/makers/appimage), [DEB](https://fastforge.dev/makers/deb), [RPM](https://fastforge.dev/makers/rpm), Pacman
+- **Linux**: [AppImage](https://fastforge.dev/makers/appimage), [DEB](https://fastforge.dev/makers/deb), [RPM](https://fastforge.dev/makers/rpm), [Flatpak](https://fastforge.dev/makers/flatpak), Pacman
 - **macOS**: [DMG](https://fastforge.dev/makers/dmg), [PKG](https://fastforge.dev/makers/pkg)
 - **Windows**: [EXE](https://fastforge.dev/makers/exe), [MSIX](https://fastforge.dev/makers/msix)
 - **Universal**: [ZIP](https://fastforge.dev/makers/zip)

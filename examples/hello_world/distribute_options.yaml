@@ -56,6 +56,12 @@ releases:
           target: pacman
           build_args:
             profile: true
+      - name: linux-flatpak
+        package:
+          platform: linux
+          target: flatpak
+          build_args:
+            profile: true
       - name: linux-zip
         package:
           platform: linux
@@ -131,6 +137,10 @@ releases:
         package:
           platform: linux
           target: deb
+      - name: linux-flatpak
+        package:
+          platform: linux
+          target: flatpak
       - name: linux-zip
         package:
           platform: linux
