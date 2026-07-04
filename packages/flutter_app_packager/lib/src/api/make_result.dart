@@ -4,7 +4,10 @@ import 'package:flutter_app_packager/src/api/make_config.dart';
 import 'package:flutter_app_packager/src/api/make_error.dart';
 
 class MakeResult {
-  MakeResult(this.config, {this.duration}) : artifacts = config.outputArtifacts;
+  MakeResult(
+    this.config, {
+    this.duration,
+  }) : artifacts = config.outputArtifacts;
 
   final MakeConfig config;
   final List<FileSystemEntity> artifacts;
@@ -15,7 +18,10 @@ class MakeResult {
       'config': config.toJson(),
       'artifacts': artifacts
           .map(
-            (e) => {'type': e is File ? 'file' : 'directory', 'path': e.path},
+            (e) => {
+              'type': e is File ? 'file' : 'directory',
+              'path': e.path,
+            },
           )
           .toList(),
       'duration': duration,

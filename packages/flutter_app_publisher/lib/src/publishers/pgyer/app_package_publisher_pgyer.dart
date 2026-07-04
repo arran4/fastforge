@@ -1,5 +1,5 @@
-import 'dart:io';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_app_publisher/src/api/app_package_publisher.dart';
@@ -41,7 +41,9 @@ class AppPackagePublisherPgyer extends AppPackagePublisher {
     tryCount = 0;
     var buildResult = await getBuildInfo(config.apiKey, uploadKey);
     String buildKey = buildResult.data!['data']['buildKey'];
-    return PublishResult(url: 'http://www.pgyer.com/$buildKey');
+    return PublishResult(
+      url: 'http://www.pgyer.com/$buildKey',
+    );
   }
 
   /// 获取上传 Token 信息
@@ -187,7 +189,10 @@ class AppPackagePublisherPgyer extends AppPackagePublisher {
     try {
       Response response = await _dio.get(
         'https://www.pgyer.com/apiv2/app/buildInfo',
-        queryParameters: {'_api_key': apiKey, 'buildKey': uploadKey},
+        queryParameters: {
+          '_api_key': apiKey,
+          'buildKey': uploadKey,
+        },
       );
       int code = response.data['code'];
       if (code == 1247) {

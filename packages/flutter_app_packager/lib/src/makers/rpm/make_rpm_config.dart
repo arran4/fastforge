@@ -138,9 +138,8 @@ class MakeRPMConfig extends MakeConfig {
             'cp -r %{name}*.xml %{buildroot}%{_datadir}/metainfo || :',
             'update-mime-database %{_datadir}/mime &> /dev/null || :',
           ].join('\n'),
-          '%postun': [
-            'update-mime-database %{_datadir}/mime &> /dev/null || :',
-          ].join('\n'),
+          '%postun': ['update-mime-database %{_datadir}/mime &> /dev/null || :']
+              .join('\n'),
           '%files': [
             '%{_bindir}/%{name}',
             '%{_datadir}/%{name}',
@@ -184,12 +183,16 @@ class MakeRPMConfig extends MakeConfig {
         .entries
         .map((e) => '${e.key}: ${e.value}')
         .join('\n');
-    final body = (json['SPEC']['body'] as Map).entries.map((e) {
-      return '${e.key}\n${e.value}\n';
-    }).join('\n');
-    final inlineBody = (json['SPEC']['inline-body'] as Map).entries.map((e) {
-      return '${e.key}${e.value}\n';
-    }).join('\n');
+    final body = (json['SPEC']['body'] as Map).entries.map(
+      (e) {
+        return '${e.key}\n${e.value}\n';
+      },
+    ).join('\n');
+    final inlineBody = (json['SPEC']['inline-body'] as Map).entries.map(
+      (e) {
+        return '${e.key}${e.value}\n';
+      },
+    ).join('\n');
 
     final desktopFile = [
       '[Desktop Entry]',

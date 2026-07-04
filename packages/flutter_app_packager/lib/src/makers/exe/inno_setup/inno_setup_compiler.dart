@@ -6,9 +6,8 @@ import 'package:shell_executor/shell_executor.dart';
 
 class InnoSetupCompiler {
   Future<bool> compile(InnoSetupScript script) async {
-    Directory innoSetupDirectory = Directory(
-      'C:\\Program Files (x86)\\Inno Setup 6',
-    );
+    Directory innoSetupDirectory =
+        Directory('C:\\Program Files (x86)\\Inno Setup 6');
 
     if (!innoSetupDirectory.existsSync()) {
       throw Exception('`Inno Setup 6` was not installed.');

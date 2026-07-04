@@ -22,7 +22,10 @@ class AppPackagePublisherFirebaseHosting extends AppPackagePublisher {
     Directory directory = fileSystemEntity as Directory;
 
     PublishFirebaseHostingConfig publishConfig =
-        PublishFirebaseHostingConfig.parse(environment, publishArguments);
+        PublishFirebaseHostingConfig.parse(
+      environment,
+      publishArguments,
+    );
 
     try {
       File firebaseRcFile = File('${directory.path}/.firebaserc');
@@ -42,16 +45,19 @@ class AppPackagePublisherFirebaseHosting extends AppPackagePublisher {
           },
         }),
       );
-      ProcessResult r = await $('firebase', [
-        'deploy',
-      ], workingDirectory: directory.path);
+      ProcessResult r = await $(
+        'firebase',
+        ['deploy'],
+        workingDirectory: directory.path,
+      );
 
       String log = r.stdout.toString();
-      RegExpMatch? match = RegExp(
-        r'(?<=Hosting URL: )\bhttps?:\/\/\S+\b',
-      ).firstMatch(log);
+      RegExpMatch? match =
+          RegExp(r'(?<=Hosting URL: )\bhttps?:\/\/\S+\b').firstMatch(log);
 
-      return PublishResult(url: match != null ? match.group(0)! : '');
+      return PublishResult(
+        url: match != null ? match.group(0)! : '',
+      );
     } catch (error) {
       rethrow;
     }

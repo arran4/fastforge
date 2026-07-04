@@ -1,7 +1,11 @@
 import 'package:unified_distributor/src/release_job.dart';
 
 class Release {
-  Release({this.variables, required this.name, required this.jobs});
+  Release({
+    this.variables,
+    required this.name,
+    required this.jobs,
+  });
 
   factory Release.fromJson(Map<String, dynamic> json) {
     Map<String, String> variables = {};
@@ -11,7 +15,11 @@ class Release {
     List<ReleaseJob> jobs = (json['jobs'] as List? ?? [])
         .map((item) => ReleaseJob.fromJson(item))
         .toList();
-    return Release(variables: variables, name: json['name'], jobs: jobs);
+    return Release(
+      variables: variables,
+      name: json['name'],
+      jobs: jobs,
+    );
   }
 
   final Map<String, String>? variables;

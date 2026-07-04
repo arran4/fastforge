@@ -1,7 +1,9 @@
 enum BuildMode { profile, release }
 
 class BuildConfig {
-  BuildConfig({this.arguments = const {}});
+  BuildConfig({
+    this.arguments = const {},
+  });
 
   final Map<String, dynamic> arguments;
 
@@ -16,7 +18,10 @@ class BuildConfig {
   }
 
   Map<String, dynamic> toJson() {
-    return {'mode': mode.name, 'flavor': flavor, 'arguments': arguments}
-      ..removeWhere((key, value) => value == null);
+    return {
+      'mode': mode.name,
+      'flavor': flavor,
+      'arguments': arguments,
+    }..removeWhere((key, value) => value == null);
   }
 }

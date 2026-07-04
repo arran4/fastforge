@@ -62,10 +62,16 @@ modules:
       sdk: sdk,
       finishArgs: finishArgs,
     )
-      ..appName = makeConfig.appName
-      ..appVersion = makeConfig.appVersion
-      ..appBuildNumber = makeConfig.appBuildNumber
-      ..outputDirectory = makeConfig.outputDirectory;
+      ..buildMode = makeConfig.buildMode
+      ..buildOutputDirectory = makeConfig.buildOutputDirectory
+      ..buildOutputFiles = makeConfig.buildOutputFiles
+      ..platform = makeConfig.platform
+      ..flavor = makeConfig.flavor
+      ..channel = makeConfig.channel
+      ..artifactName = makeConfig.artifactName
+      ..packageFormat = makeConfig.packageFormat
+      ..outputDirectory = makeConfig.outputDirectory
+      ..pubspec = makeConfig.pubspec;
   }
 }
 

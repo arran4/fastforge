@@ -35,7 +35,9 @@ void main() {
       });
 
       test('creates instance with only required parameters', () {
-        final config = PublishPgyerConfig(apiKey: 'test_api_key');
+        final config = PublishPgyerConfig(
+          apiKey: 'test_api_key',
+        );
 
         expect(config.apiKey, equals('test_api_key'));
         expect(config.oversea, isNull);

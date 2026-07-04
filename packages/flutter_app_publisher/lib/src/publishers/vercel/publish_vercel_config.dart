@@ -1,7 +1,10 @@
 import 'package:flutter_app_publisher/src/api/app_package_publisher.dart';
 
 class PublishVercelConfig extends PublishConfig {
-  PublishVercelConfig({required this.orgId, required this.projectId});
+  PublishVercelConfig({
+    required this.orgId,
+    required this.projectId,
+  });
 
   factory PublishVercelConfig.parse(
     Map<String, String>? environment,
