@@ -15,6 +15,8 @@ Install requirements:
 
 Add `make_config.yaml` to your project `linux/packaging/rpm` directory.
 
+You can also add `make_config.yaml` to your project `linux/packaging` directory to load default configuration.
+
 ```yaml
 icon: assets/logo.png
 summary: A really cool application

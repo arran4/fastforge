@@ -8,6 +8,8 @@
 
 Add `make_config.yaml` to your project `windows/packaging/exe` directory.
 
+You can also add `make_config.yaml` to your project `windows/packaging` directory to load default configuration.
+
 ```yaml
 # The value of AppId uniquely identifies this application.
 # Do not use the same AppId value in installers for other applications.

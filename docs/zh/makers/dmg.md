@@ -16,6 +16,8 @@ npm install -g appdmg
 
 将 `make_config.yaml` 添加到你的项目 `macos/packaging/dmg` 目录。
 
+你也可以将 `make_config.yaml` 添加到你的项目 `macos/packaging` 目录，以加载默认配置。
+
 ```yaml
 title: hello_world
 contents:

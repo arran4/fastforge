@@ -10,9 +10,59 @@ export 'make_config.dart';
 export 'make_error.dart';
 export 'make_result.dart';
 
+Map<String, dynamic> _deepMerge(
+  Map<String, dynamic> target,
+  Map<String, dynamic> source,
+) {
+  for (final key in source.keys) {
+    final value = source[key];
+    if (value is Map<String, dynamic> &&
+        target.containsKey(key) &&
+        target[key] is Map<String, dynamic>) {
+      target[key] = _deepMerge(target[key] as Map<String, dynamic>, value);
+    } else {
+      target[key] = value;
+    }
+  }
+  return target;
+}
+
 Map<String, dynamic> loadMakeConfigYaml(String path) {
-  final yamlDoc = loadYaml(File(path).readAsStringSync());
-  return json.decode(json.encode(yamlDoc));
+  Map<String, dynamic> config = {};
+
+  final file = File(path);
+  final parentDir = file.parent.parent;
+  final defaultFile = File('${parentDir.path}/make_config.yaml');
+
+  bool defaultExists = defaultFile.existsSync();
+  bool fileExists = file.existsSync();
+
+  if (!defaultExists && !fileExists) {
+    final yamlDoc = loadYaml(file.readAsStringSync());
+    return json.decode(json.encode(yamlDoc)) as Map<String, dynamic>;
+  }
+
+  if (defaultExists) {
+    final yamlDoc = loadYaml(defaultFile.readAsStringSync());
+    if (yamlDoc != null) {
+      final decoded = json.decode(json.encode(yamlDoc));
+      if (decoded is Map<String, dynamic>) {
+        config = _deepMerge(config, decoded);
+      }
+    }
+  }
+
+  if (fileExists) {
+    final yamlDoc = loadYaml(file.readAsStringSync());
+    if (yamlDoc != null) {
+      final decoded = json.decode(json.encode(yamlDoc));
+      if (decoded is Map<String, dynamic>) {
+        config = _deepMerge(config, decoded);
+      }
+    }
+  }
+
+  return config;
 }
 
 abstract class AppPackageMaker {
