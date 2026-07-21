@@ -1,5 +1,5 @@
-import 'dart:io';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_app_publisher/src/api/app_package_publisher.dart';
@@ -29,7 +29,7 @@ class AppPackagePublisherPgyer extends AppPackagePublisher {
     // 使用配置类解析参数
     final config = PublishPgyerConfig.parse(environment, publishArguments);
     print(
-        'config:\n${const JsonEncoder.withIndent('  ').convert(config.toJson())}');
+        'config:\n${const JsonEncoder.withIndent('  ').convert(config.toJson())}',);
 
     var tokenInfo = await getCOSToken(config, file.path);
     String uploadKey = await uploadApp(tokenInfo, file, onPublishProgress);
@@ -64,20 +64,20 @@ class AppPackagePublisherPgyer extends AppPackagePublisher {
     // 添加所有可选参数，只在有值时才添加
     _addOptionalParameter(formDataMap, 'oversea', config.oversea);
     _addOptionalParameter(
-        formDataMap, 'buildInstallType', config.buildInstallType);
+        formDataMap, 'buildInstallType', config.buildInstallType,);
     _addOptionalParameter(formDataMap, 'buildPassword', config.buildPassword);
     _addOptionalParameter(
-        formDataMap, 'buildDescription', config.buildDescription);
+        formDataMap, 'buildDescription', config.buildDescription,);
     _addOptionalParameter(
-        formDataMap, 'buildUpdateDescription', config.buildUpdateDescription);
+        formDataMap, 'buildUpdateDescription', config.buildUpdateDescription,);
     _addOptionalParameter(
-        formDataMap, 'buildInstallDate', config.buildInstallDate);
+        formDataMap, 'buildInstallDate', config.buildInstallDate,);
     _addOptionalParameter(
-        formDataMap, 'buildInstallStartDate', config.buildInstallStartDate);
+        formDataMap, 'buildInstallStartDate', config.buildInstallStartDate,);
     _addOptionalParameter(
-        formDataMap, 'buildInstallEndDate', config.buildInstallEndDate);
+        formDataMap, 'buildInstallEndDate', config.buildInstallEndDate,);
     _addOptionalParameter(
-        formDataMap, 'buildChannelShortcut', config.buildChannelShortcut);
+        formDataMap, 'buildChannelShortcut', config.buildChannelShortcut,);
 
     FormData formData = FormData.fromMap(formDataMap);
     try {
@@ -102,7 +102,7 @@ class AppPackagePublisherPgyer extends AppPackagePublisher {
   /// [key] 参数键名
   /// [value] 参数值
   void _addOptionalParameter(
-      Map<String, dynamic> formDataMap, String key, dynamic value) {
+      Map<String, dynamic> formDataMap, String key, dynamic value,) {
     if (value != null) {
       if (value is String && value.isNotEmpty) {
         formDataMap[key] = value;
