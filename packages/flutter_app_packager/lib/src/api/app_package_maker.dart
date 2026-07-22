@@ -55,6 +55,10 @@ Map<String, dynamic> loadMakeConfigYaml(String path) {
           'Default config file is not a valid YAML map.',
         );
       }
+    } else {
+      throw const FormatException(
+        'Default config file is not a valid YAML map.',
+      );
     }
   }
 
@@ -69,6 +73,10 @@ Map<String, dynamic> loadMakeConfigYaml(String path) {
           'Specific config file is not a valid YAML map.',
         );
       }
+    } else {
+      throw const FormatException(
+        'Specific config file is not a valid YAML map.',
+      );
     }
   }
 
