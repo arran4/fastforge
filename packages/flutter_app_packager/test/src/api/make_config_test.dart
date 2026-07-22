@@ -102,5 +102,51 @@ void main() {
 
       expect(result['a'], 1);
     });
+
+    test('should throw FileSystemException if neither config exists', () {
+      final platformDir = Directory('${tempDir.path}/linux/packaging');
+      final formatDir = Directory('${platformDir.path}/deb');
+      formatDir.createSync(recursive: true);
+
+      final specificConfig = File('${formatDir.path}/make_config.yaml');
+
+      expect(
+        () => loadMakeConfigYaml(specificConfig.path),
+        throwsA(isA<FileSystemException>()),
+      );
+    });
+
+    test('should throw FormatException if default config is invalid', () {
+      final platformDir = Directory('${tempDir.path}/linux/packaging');
+      final formatDir = Directory('${platformDir.path}/deb');
+      formatDir.createSync(recursive: true);
+
+      final defaultConfig = File('${platformDir.path}/make_config.yaml');
+      defaultConfig.writeAsStringSync('- a\n- b\n');
+
+      final specificConfig = File('${formatDir.path}/make_config.yaml');
+
+      expect(
+        () => loadMakeConfigYaml(specificConfig.path),
+        throwsA(isA<FormatException>()),
+      );
+    });
+
+    test('should throw FormatException if specific config is invalid', () {
+      final platformDir = Directory('${tempDir.path}/linux/packaging');
+      final formatDir = Directory('${platformDir.path}/deb');
+      formatDir.createSync(recursive: true);
+
+      final defaultConfig = File('${platformDir.path}/make_config.yaml');
+      defaultConfig.writeAsStringSync('a: 1\n');
+
+      final specificConfig = File('${formatDir.path}/make_config.yaml');
+      specificConfig.writeAsStringSync('- a\n- b\n');
+
+      expect(
+        () => loadMakeConfigYaml(specificConfig.path),
+        throwsA(isA<FormatException>()),
+      );
+    });
   });
 }
