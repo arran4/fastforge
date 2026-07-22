@@ -38,8 +38,10 @@ Map<String, dynamic> loadMakeConfigYaml(String path) {
   bool fileExists = file.existsSync();
 
   if (!defaultExists && !fileExists) {
-    final yamlDoc = loadYaml(file.readAsStringSync());
-    return json.decode(json.encode(yamlDoc)) as Map<String, dynamic>;
+    throw FileSystemException(
+      'Neither the specific config file nor the default config file exists.',
+      path,
+    );
   }
 
   if (defaultExists) {
@@ -48,6 +50,10 @@ Map<String, dynamic> loadMakeConfigYaml(String path) {
       final decoded = json.decode(json.encode(yamlDoc));
       if (decoded is Map<String, dynamic>) {
         config = _deepMerge(config, decoded);
+      } else {
+        throw const FormatException(
+          'Default config file is not a valid YAML map.',
+        );
       }
     }
   }
@@ -58,6 +64,10 @@ Map<String, dynamic> loadMakeConfigYaml(String path) {
       final decoded = json.decode(json.encode(yamlDoc));
       if (decoded is Map<String, dynamic>) {
         config = _deepMerge(config, decoded);
+      } else {
+        throw const FormatException(
+          'Specific config file is not a valid YAML map.',
+        );
       }
     }
   }
