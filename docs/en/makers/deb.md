@@ -2,7 +2,7 @@
 
 Add `make_config.yaml` to your project `linux/packaging/deb` directory.
 
-You can also add `make_config.yaml` to your project `linux/packaging` directory to load default configuration.
+You can also add `make_config.yaml` to your project `linux/packaging` directory to inherit common configuration.
 
 ```yaml
 display_name: Hello World

@@ -4,7 +4,7 @@
 
 Add `make_config.yaml` to your project `windows/packaging/msix` directory.
 
-You can also add `make_config.yaml` to your project `windows/packaging` directory to load default configuration.
+You can also add `make_config.yaml` to your project `windows/packaging` directory to inherit common configuration.
 
 ```yaml
 display_name: HelloWorld

@@ -6,7 +6,7 @@
 
 将 `make_config.yaml` 添加到你的项目 `macos/packaging/pkg` 目录。
 
-你也可以将 `make_config.yaml` 添加到你的项目 `macos/packaging` 目录，以加载默认配置。
+你也可以将 `make_config.yaml` 添加到你的项目 `macos/packaging` 目录，以继承公共配置。
 
 ```yaml
 install-path: /Applications

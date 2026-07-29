@@ -6,7 +6,7 @@
 
 Add `make_config.yaml` to your project `macos/packaging/pkg` directory.
 
-You can also add `make_config.yaml` to your project `macos/packaging` directory to load default configuration.
+You can also add `make_config.yaml` to your project `macos/packaging` directory to inherit common configuration.
 
 ```yaml
 install-path: /Applications
