@@ -75,6 +75,9 @@ postinstall_scripts:
 postuninstall_scripts:
   - echo `Surprised Pickachu face`
 
+# a name to categorize the app into a section of application (overrides common generic_name)
+generic_name: Music Application
+
 # supported mime types that can be opened using this application
 # supported_mime_type:
 #   - audio/mpeg

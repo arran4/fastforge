@@ -5,3 +5,9 @@ packager: Kingkor Roy Tirtho
 packager_email: krtirtho@gmail.com
 license: GPLv3
 url: https://github.com/fastforgedev/fastforge
+
+# Demonstrates overriding inherited categories from parent make_config.yaml
+# refer: https://specifications.freedesktop.org/menu-spec/latest/
+categories:
+  - Cool
+  - Awesome
