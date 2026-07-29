@@ -9,7 +9,63 @@ maintainer:
 # the size of binary in kilobyte
 installed_size: 6604
 
+# direct dependencies required by the application
+# refer: https://www.debian.org/doc/debian-policy/ch-relationships.html
+# dependencies:
+#   - libkeybinder-3.0-0 (>= 0.3.2)
+
+# refer: https://www.debian.org/doc/debian-policy/ch-relationships.html
+# build_dependencies_indep:
+#   - texinfo
+
+# refer: https://www.debian.org/doc/debian-policy/ch-relationships.html
+# build_dependencies:
+#   - kernel-headers-2.2.10 [!hurd-i386]
+#   - gnumach-dev [hurd-i386]
+#   - libluajit5.1-dev [i386 amd64 kfreebsd-i386 armel armhf powerpc mips]
+
+# refer: https://www.debian.org/doc/debian-policy/ch-relationships.html
+# recommended_dependencies:
+#   - neofetch
+
+# refer: https://www.debian.org/doc/debian-policy/ch-relationships.html
+# suggested_dependencies:
+#   - libkeybinder-3.0-0 (>= 0.3.2)
+
+# refer: https://www.debian.org/doc/debian-policy/ch-relationships.html
+# enhances:
+#   - spotube
+
+# refer: https://www.debian.org/doc/debian-policy/ch-relationships.html
+# pre_dependencies:
+#   - libc6
+
+# refer: https://www.debian.org/doc/debian-policy/ch-relationships.html#packages-which-break-other-packages-breaks
+# breaks:
+#   - libspotify (<< 3.0.0)
+
+# refer: https://www.debian.org/doc/debian-policy/ch-relationships.html#conflicting-binary-packages-conflicts
+# conflicts:
+#   - spotify
+
+# refer: https://www.debian.org/doc/debian-policy/ch-relationships.html#virtual-packages-provides
+# provides:
+#   - libx11
+
+# refer: https://www.debian.org/doc/debian-policy/ch-relationships.html#overwriting-files-and-replacing-packages-replaces
+# replaces:
+#   - spotify
+
 postinstall_scripts:
   - echo `Installed my awesome app`
 postuninstall_scripts:
   - echo `Surprised Pickachu face`
+
+# supported mime types that can be opened using this application
+# supported_mime_type:
+#   - audio/mpeg
+
+# shown when right clicked the desktop entry icons
+# actions:
+#   - Gallery
+#   - Create

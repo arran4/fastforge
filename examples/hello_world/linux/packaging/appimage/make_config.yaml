@@ -1,3 +1,7 @@
+# supported mime types that can be opened using this application
+# supported_mime_type:
+#   - audio/mpeg
+
 actions:
   - name: Say Hi
     label: say-hi
