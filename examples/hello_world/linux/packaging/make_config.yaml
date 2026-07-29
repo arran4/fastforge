@@ -1,0 +1,18 @@
+display_name: Hello World
+
+icon: assets/logo.png
+
+keywords:
+  - Hello
+  - World
+  - Test
+  - Application
+
+generic_name: Cool Application
+
+metainfo: linux/packaging/helloworld.appdata.xml
+
+categories:
+  - Music
+
+startup_notify: true
