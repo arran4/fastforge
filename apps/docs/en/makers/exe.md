@@ -11,7 +11,7 @@ Build your Flutter app as a Windows EXE installer using Inno Setup. This creates
 
 Add `make_config.yaml` to your project `windows/packaging/exe` directory.
 
-You can also add `make_config.yaml` to your project `windows/packaging` directory to load default configuration.
+You can also add `make_config.yaml` to your project `windows/packaging` directory to inherit common configuration.
 
 ```yaml
 # The value of AppId uniquely identifies this application.
