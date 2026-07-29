@@ -175,3 +175,28 @@ local screenshot sets before syncing.
 ### `distribute_options.yaml`
 
 Refer to the [Distribute Options](./distribute-options.md) page for the full configuration reference.
+
+### Skill Management
+
+Fastforge can install "skills" to teach AI agents how to correctly interact with this CLI.
+
+```bash
+# Install the official fastforge skill for common AI agents
+fastforge skill install ./skills/fastforge
+
+# Install from a remote repository
+fastforge skill install owner/repo my-skill --agent cursor --scope project
+
+# List installed skills
+fastforge skill list
+
+# Inspect a skill's metadata
+fastforge skill inspect my-skill
+
+# Update skills
+fastforge skill update my-skill
+fastforge skill update --all
+
+# Remove a skill
+fastforge skill remove my-skill
+```

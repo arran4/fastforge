@@ -9,6 +9,7 @@ members = [
   "crates/dmg_maker",
   "crates/stores/app_store_connect",
   "crates/stores/google_play_console",
+  "crates/skill_manager",
   "apps/cli",
 ]
 

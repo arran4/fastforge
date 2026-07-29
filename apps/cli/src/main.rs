@@ -9,6 +9,7 @@ use cli::{
 };
 use fastforge_app_store_connect::cli::AppStoreConnectArgs;
 use fastforge_google_play_console::cli::GooglePlayConsoleArgs;
+use fastforge_skill_manager::cli::{SkillArgs, SkillCommand};
 
 #[derive(Parser)]
 #[command(name = "fastforge")]
@@ -46,6 +47,8 @@ enum Commands {
     AppStore(AppStoreConnectArgs),
     #[command(name = "googleplay", about = "Use Google Play Console")]
     GooglePlay(GooglePlayConsoleArgs),
+    #[command(about = "Manage AI agent skills")]
+    Skill(SkillArgs),
 }
 
 #[tokio::main]
@@ -85,6 +88,15 @@ async fn main() -> anyhow::Result<()> {
         }
         Commands::GooglePlay(args) => {
             fastforge_google_play_console::cli::execute(args).await?;
+        }
+        Commands::Skill(args) => {
+            match &args.command {
+                SkillCommand::Install(cmd_args) => fastforge_skill_manager::commands::install::execute(cmd_args).await?,
+                SkillCommand::Update(cmd_args) => fastforge_skill_manager::commands::update::execute(cmd_args).await?,
+                SkillCommand::Remove(cmd_args) => fastforge_skill_manager::commands::remove::execute(cmd_args).await?,
+                SkillCommand::List(cmd_args) => fastforge_skill_manager::commands::list::execute(cmd_args).await?,
+                SkillCommand::Inspect(cmd_args) => fastforge_skill_manager::commands::inspect::execute(cmd_args).await?,
+            }
         }
     }
 

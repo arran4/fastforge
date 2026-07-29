@@ -164,3 +164,28 @@ push 成功后，最终的远端 ID 和本地校验值会写回应用级 manifes
 ### `distribute_options.yaml`
 
 完整的配置参考请查看[分发选项](./distribute-options.md)页面。
+
+### 技能管理 (Skill Management)
+
+Fastforge 可以安装“技能”，以指导 AI 代理如何正确地与该 CLI 交互。
+
+```bash
+# 为常见的 AI 代理安装官方 fastforge 技能
+fastforge skill install ./skills/fastforge
+
+# 从远程仓库安装
+fastforge skill install owner/repo my-skill --agent cursor --scope project
+
+# 列出已安装的技能
+fastforge skill list
+
+# 检查技能的元数据
+fastforge skill inspect my-skill
+
+# 更新技能
+fastforge skill update my-skill
+fastforge skill update --all
+
+# 删除技能
+fastforge skill remove my-skill
+```
